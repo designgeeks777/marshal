@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Collapse, Dropdown, Button } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -9,6 +10,7 @@ const Header = () => {
   const Handletoggle = () => {
     setIsOpen(!isOpen);
   };
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,6 +45,10 @@ const Header = () => {
                 src={require("../assets/images/shoppingCart.png")}
                 width={24}
                 height={24}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/cart");
+                }}
               />
             </div>
             {/* </DropdownToggle> */}

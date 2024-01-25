@@ -37,39 +37,67 @@ const BookDisplay = ({ tableData }) => {
     if (id === selectedId) return setSelectedId(null);
     setSelectedId(id);
   };
-  console.log(tableData);
   const BookItem = () => {
     let paginatedTableData = tableData.slice(
       currentPage * pageSize,
       (currentPage + 1) * pageSize
     );
-    return paginatedTableData.map((book, index) => {
-      return (
-        // <Col md="4" lg="5" className="p-4" key={index}>
-        <div className="bookDisplayItemContainer">
-          <div className="bookImgContainer">
-            <img
-              src={require(`../assets/images/${book.image}`)}
-              alt="bookImage"
-            />
+    // return paginatedTableData.map((book, index) => {
+    //   return (
+    return (
+      <div className="row m-0 p-0">
+        {paginatedTableData.map((book) => (
+          <div key={book.id} className="col-md-6 bookDisplayItemContainer">
+            <div className="row">
+              <div className="col-6 pe-0 responsiveCol align-items-center">
+                <div className="bookImgContainer">
+                  <img
+                    alt={`Book ${book.id}`}
+                    className="img-fluid"
+                    src={require(`../assets/images/${book.image}`)}
+                  />
+                </div>
+              </div>
+
+              <div className="bookInfo col-6 responsiveCol">
+                <legend className="mb-0 fw-bold">{book.title}</legend>
+                <p className="fw-bold fs-5">Rs {book.price}</p>
+                <Button
+                  color="secondary"
+                  className="addToCartBtn btn btn-md btn-block btn-border-radius"
+                  // onClick={}
+                >
+                  Add to Cart
+                </Button>
+              </div>
+            </div>
           </div>
-          <div className="bookInfo">
-            <legend className="mb-0 fw-bold">{book.title}</legend>
-            <small className="text-muted text-black fw-bold">
-              {book.price}
-            </small>
-            <Button
-              color="secondary"
-              className="addToCartBtn"
-              // onClick={}
-            >
-              Add to Cart
-            </Button>
-          </div>
-        </div>
-        // </Col>
-      );
-    });
+        ))}
+      </div>
+    );
+    // <div className="bookDisplayItemContainer">
+    // <div className="bookImgContainer">
+    //   <img
+    //     src={require(`../assets/images/${book.image}`)}
+    //     alt="bookImage"
+    //   />
+    // </div>
+    // <div className="bookInfo">
+    //   <legend className="mb-0 fw-bold">{book.title}</legend>
+    //   <small className="text-muted text-black fw-bold">
+    //     {book.price}
+    //   </small>
+    //   <Button
+    //     color="secondary"
+    //     className="addToCartBtn"
+    //     // onClick={}
+    //   >
+    //     Add to Cart
+    //   </Button>
+    // </div>
+    // </div>
+    //   );
+    // });
   };
 
   return (
@@ -87,7 +115,7 @@ const BookDisplay = ({ tableData }) => {
       )}
       {tableData.length !== 0 && (
         <Pagination className="d-flex justify-content-center">
-          <PaginationItem disabled={currentPage <= 0}>
+          <PaginationItem className="px-1" disabled={currentPage <= 0}>
             <PaginationLink
               onClick={(e) => handleClick(e, currentPage - 1)}
               previous
@@ -96,14 +124,17 @@ const BookDisplay = ({ tableData }) => {
           </PaginationItem>
 
           {[...Array(pagesCount)].map((page, i) => (
-            <PaginationItem active={i === currentPage} key={i}>
+            <PaginationItem className="px-1" active={i === currentPage} key={i}>
               <PaginationLink onClick={(e) => handleClick(e, i)} href="#">
                 {i + 1}
               </PaginationLink>
             </PaginationItem>
           ))}
 
-          <PaginationItem disabled={currentPage >= pagesCount - 1}>
+          <PaginationItem
+            className="px-1"
+            disabled={currentPage >= pagesCount - 1}
+          >
             <PaginationLink
               onClick={(e) => handleClick(e, currentPage + 1)}
               next

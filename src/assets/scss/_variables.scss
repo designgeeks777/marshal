@@ -15,7 +15,7 @@ $warning: #ee9d01;
 $dark: #343a40;
 $light: #eaf2fb;
 $secondary: #35363b;
-$button-actions : #008BE2;
+$button-actions : #662D8C;
 
 $theme-colors: (
   "primary": $primary,
@@ -64,6 +64,7 @@ $placeholder-color : #C9CAC8;
 // Theme common variable
 /********************/
 $border-radius: 0.3rem !default;
+// $border-radius: 16px !default;
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.05);
 
 $headings-font-size: 24px;
@@ -93,6 +94,7 @@ $btn-focus-width: 0px;
 $btn-width : 174px;
 $btn-height: 44px;
 $btn-border-radius: 16px;
+$btn-border-radius-lg: 0.8rem;
 $jrlg-btn-width: 112px;
 $jrlg-btn-height: 38px;
 

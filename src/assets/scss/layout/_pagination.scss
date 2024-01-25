@@ -2,8 +2,10 @@
 // Pagination style
 /********************/
 .pagination {
-    --bs-pagination-padding-x: 0.45rem;
-    --bs-pagination-padding-y: 0.075rem;
+    // --bs-pagination-padding-x: 0.45rem;
+    // --bs-pagination-padding-y: 0.075rem;
+    --bs-pagination-padding-x: 0.65rem;
+    --bs-pagination-padding-y: 0.18rem;
     --bs-pagination-font-size: 1rem;
     --bs-pagination-color: $black;
     --bs-pagination-bg: $white;

@@ -80,28 +80,28 @@ const Welcome = () => {
           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         </div>
       </div>
-      <div className="p-4 m-5 d-flex align-items-center justify-content-center">
-        <img
-          src={require("../assets/images/booksIcon.png")}
-          alt="booksIcon"
-          width={182}
-          height={120}
-          className="booksIcons"
-        />
-        <img
-          src={require("../assets/images/booksHeading.png")}
-          alt="booksHeading"
-          width={259}
-          height={129}
-          className="booksHeading"
-        />
-        <img
-          src={require("../assets/images/booksIcon.png")}
-          alt="booksIcon"
-          width={182}
-          height={120}
-          className="booksIcons"
-        />
+      <div className="row d-flex align-items-center text-center booksHeading">
+        <div className="col-3">
+          <img
+            src={require("../assets/images/booksIcon.png")}
+            alt="booksIcon"
+            className="booksIcons"
+          />
+        </div>
+        <div className="col-6">
+          <img
+            src={require("../assets/images/booksHeading.png")}
+            alt="booksHeading"
+            className="booksHeadingIcon"
+          />
+        </div>
+        <div className="col-3">
+          <img
+            src={require("../assets/images/booksIcon.png")}
+            alt="booksIcon"
+            className="booksIcons"
+          />
+        </div>
       </div>
       <BookDisplay tableData={tableData} />
     </>

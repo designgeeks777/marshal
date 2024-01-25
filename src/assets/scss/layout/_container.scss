@@ -1,13 +1,25 @@
 .pageWrapper {
   min-height: 100vh;
+  
 }
 .contentArea {
   flex-grow: 1;
 }
+
 .wrapper {
   max-width: 1300px;
   margin: 0 auto;
 }
+
+.footer {
+  background: $gradient;
+  color: $white;
+  text-align: center;
+  padding: 20px;
+  bottom: 0;
+  width: 100%;
+}
+
 .card {
   box-shadow: $card-box-shadow;
   margin-bottom: 30px;
@@ -27,6 +39,7 @@
     line-height: 60px;
   }
 }
+
 .button-group .btn {
   margin: 3px;
 }
@@ -1024,20 +1037,20 @@ li:first-child > .stepcircle::after{
 //header 
 .buyBooksBtn {
   display: inline-block;
-  padding: 10px 20px; 
+  padding: 14px 24px; 
   font-size: 16px; 
   text-align: center;
   text-decoration: none;
   border: transparent; 
-  border-radius: $btn-border-radius; 
+  border-radius: 12px; 
   background: $gradient; 
   color: $white; 
   cursor: pointer;
 }
 
 .buyBooksBtn:hover {
-  background: linear-gradient(180deg, #662D8C 0%, rgba(237, 30, 121, 0.74) 100%); 
-  color: $white;
+  background-color: $primary !important;
+  border-color: $primary !important;
 }
 
 //Welcome page bookDisplay css
@@ -1057,33 +1070,55 @@ li:first-child > .stepcircle::after{
   flex: 1;
 }
 
-.booksHeading, .booksIcons  {
-  max-width: 120px;
+.booksHeadingIcon {
+  max-width: 200px;
   max-height: 120px;
   width: 100%;
   height: 100%;
-  margin: 8px 0;
 }
+
+.booksIcons  {
+  max-width: 88px;
+  max-height: 66px;
+  width: 100%;
+  height: 100%;
+}
+
 
 .bookDisplayContainer{
-  display: flex;
-  flex-wrap: wrap;
-  padding: 24px 0;
+  // display: flex;
+  // flex-wrap: wrap;
+  padding: 12px;
 }
 
+// .bookDisplayItemContainer {
+//   display: flex;
+//   flex-basis: calc(50% - 20px);
+//   margin: 10px;
+// }
+
 .bookDisplayItemContainer {
-  display: flex;
-  flex-basis: calc(50% - 20px);
-  margin: 10px;
+  margin: 28px 0px;
+  padding: 0;
 }
+
+// div.bookDisplayItemContainer:nth-of-type(even){
+//   padding-right: 0px !important; 
+// }
+
+// div.bookDisplayItemContainer:nth-of-type(odd){
+//   padding-left: 0px !important; 
+// }
 
 .bookImgContainer {
   border-radius: $btn-border-radius;
   border: 1px solid $primary;
-  flex: 1;
+  // flex: 1;
   padding: 24px 8px 24px 8px;
-  min-width: 223px;
-  min-height: 216px;
+  max-width: 223px;
+  max-height: 216px;
+  height: auto;
+  width: 100%;
 }
 
 .bookImgContainer img {
@@ -1092,8 +1127,8 @@ li:first-child > .stepcircle::after{
 }
 
 .bookInfo {
-  flex: 1; 
-  padding: 20px;
+  // flex: 1; 
+  padding: 0px 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1101,27 +1136,134 @@ li:first-child > .stepcircle::after{
 
 .addToCartBtn {
   border-radius: $btn-border-radius;
-  width: 150px;
-  height: 44px;
+  max-width: 150px;
+  max-height: 44px;
 }
+
+// @media (max-width: 600px) {
+//   .responsiveCol {
+//     width: 50% !important;
+//   }.booksHeadingIcon
+// }
 
 @media (min-width: 600px) {
   /* Adjust styles for screens larger than 600px */
   .displayImgContainer {
     max-width: 200px; /* Adjust maximum width for larger screens */
   }
-  .booksHeading, .booksIcons {
-    max-width: 259px;
-    max-height: 129px;
+
+  .booksHeading {
+    padding: 1.5rem;
+    margin: 3rem;
   }
+
+  .booksHeadingIcon {
+    max-width: 264px;
+    max-height: 169px;
+  }
+  
   .booksIcons {
     max-width: 182px;
     max-height: 120px;
+    // max-width: 124px;
+    // max-height: 80px;
+  }
+
+  .bookDisplayContainer{ 
+    padding: 24px;
   }
 
   .bookDisplayItemContainer {
-    display: flex;
-    flex-basis: calc(50% - 60px);
-    margin: 30px;
+    // display: flex;
+    // flex-basis: calc(50% - 60px);
+    // margin: 30px;
+    // padding: 8px 60px;
+    padding: 0px 24px;
+  }
+}
+
+//cart page table css
+
+.cartPageIcon {
+  max-width: 310px;
+  max-height: 200px;
+  width: 100%;
+  height: 100%;
+}
+
+.cartHeadings {
+  font-size: $headings-font-size;
+}
+
+.cartQuantity {
+  width: 52px;
+  height: 48px;
+  border: 1px solid $table-border-color;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.cartPrice {
+  font-size: 20px;
+}
+
+.cartTotal {
+  color: $primary;
+  font-size: 20px;
+}
+
+.cartImgContainer {
+  border-radius: $btn-border-radius;
+  border: 1px solid $primary;
+  // flex: 1;
+  padding: 24px 8px 24px 8px;
+  max-width: 70px;
+  max-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartImgContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $table-border-color !important;
+}
+
+.border-top {
+  border-top: 1px solid $table-border-color !important;
+}
+
+.subTotal {
+  position: relative;
+  right: 15em;
+}
+
+.subTotalAmount {
+  position: relative;
+  right: 8em;
+}
+
+.cartButtons {
+  width: 174px;
+  height: 52px;
+  border-radius: 16px;
+}
+
+.btn-border-radius {
+  border-radius: $btn-border-radius-lg !important;
+}
+
+@media (min-width: 600px) {
+  /* Adjust styles for screens larger than 600px */
+  .cartPageIcon {
+    max-width: 310px;
+    max-height: 388px;
   }
 }
