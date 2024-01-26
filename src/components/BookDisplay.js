@@ -64,7 +64,7 @@ const BookDisplay = ({ tableData }) => {
                 <p className="fw-bold fs-5">Rs {book.price}</p>
                 <Button
                   color="secondary"
-                  className="addToCartBtn btn btn-md btn-block btn-border-radius"
+                  className="btn btn-md btn-block btn-border-radius buttons"
                   // onClick={}
                 >
                   Add to Cart

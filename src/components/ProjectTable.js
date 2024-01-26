@@ -89,12 +89,14 @@ const ProjectTables = ({
                 ) : path === "price" ? (
                   <div className="cartPrice">Rs {data[path]}</div>
                 ) : path === "quantity" ? (
-                  <div
-                    // contentEditable
-                    className="cartQuantity"
-                    // onInput={handleQuantityChange}
-                  >
-                    {data[path]}
+                  <div className="ps-3">
+                    <div
+                      // contentEditable
+                      className="cartQuantity"
+                      // onInput={handleQuantityChange}
+                    >
+                      {data[path]}
+                    </div>
                   </div>
                 ) : // <Input
                 // type="text"
@@ -132,7 +134,12 @@ const ProjectTables = ({
 
   // Calculate the total sum of the multiplied values
   const calculateTotal = () => {
-    return tableData.reduce((sum, row) => sum + row.price * row.quantity, 0);
+    let total = tableData.reduce(
+      (sum, row) => sum + row.price * row.quantity,
+      0
+    );
+    parentCallback(total);
+    return total;
   };
 
   return (

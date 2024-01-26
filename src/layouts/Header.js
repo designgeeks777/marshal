@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <>
       <Navbar className="p-4 bg-white text-primary" dark expand="md">
-        <div className="me-2 d-flex bg-gradient card-bg"></div>
+        <div className="me-3 d-flex bg-gradient circle-box"></div>
         <h3 className="me-auto mb-0 gradient">Prophet Marshall Peter</h3>
         <div className="hstack gap-2">
           <Button
@@ -39,7 +39,9 @@ const Header = () => {
               <div className="me-auto nav-link text-black">
                 About Prophet Marshall Peter
               </div>
-              <div className="mx-4 buyBooksBtn fw-bold">Buy Books</div>
+              <div className="mx-4 buyBooksBtn fw-bold btn btn-md btn-block  btn-border-radius">
+                Buy Books
+              </div>
               <img
                 alt="cart"
                 src={require("../assets/images/shoppingCart.png")}

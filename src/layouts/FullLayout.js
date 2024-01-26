@@ -6,18 +6,19 @@ import Footer from "./Footer";
 const FullLayout = () => {
   return (
     <main>
-      <div className="pageWrapper d-lg-flex">
+      {/* <div className="pageWrapper d-lg-flex"> */}
+      <div className="pageWrapper">
+        {/********header**********/}
+        {<Header />}
         {/********Content Area**********/}
         <div className="contentArea">
-          {/********header**********/}
-          {<Header />}
           {/********Middle Content**********/}
           <Container className="p-4 wrapper" fluid>
             <Outlet />
           </Container>
-          {/********footer**********/}
-          <Footer />
         </div>
+        {/********footer**********/}
+        <Footer />
       </div>
     </main>
   );

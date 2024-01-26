@@ -3,6 +3,7 @@ import BookDisplay from "../components/BookDisplay";
 import ProjectTables from "../components/ProjectTable";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import PayModal from "../components/PayModal";
 
 const tableColumns = [
   { path: "book", name: "Book" },
@@ -110,6 +111,17 @@ const Cart = () => {
   // console.log(resultData, "cartpage");
   // }, []);
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const pay = () => {
+    navigate("/payment");
+  };
+
+  const [subTotal, setSubTotal] = useState(0);
+  const handleCallback = (subtotalValue) => {
+    setSubTotal(subtotalValue);
+    console.log("subTotal", subtotalValue);
+  };
+
   return (
     <>
       <div className="px-4 row text-center d-flex align-items-center">
@@ -131,12 +143,16 @@ const Cart = () => {
           />
         </div>
       </div>
-      <ProjectTables tableData={tableData} tableColumns={tableColumns} />
+      <ProjectTables
+        tableData={tableData}
+        tableColumns={tableColumns}
+        parentCallback={handleCallback}
+      />
       <div className="border-top"></div>
       <div className="p-4 d-flex justify-content-end ">
         <Button
           // className="btn py-2 mx-3 cartButtons"
-          className="py-2 mx-3 btn btn-lg btn-block btn-border-radius"
+          className="px-3 py-2 mx-3 btn btn-md btn-block"
           color="secondary"
           onClick={() => {
             navigate("/welcome");
@@ -146,15 +162,38 @@ const Cart = () => {
         </Button>
         <Button
           // className="btn py-2 cartButtons"
-          className="px-5 py-2 btn btn-lg btn-block  btn-border-radius"
+          className="px-5 py-2 btn btn-md btn-block"
           color="primary"
-          // onClick={() => update()}
+          onClick={() => {
+            setShow(true);
+          }}
           // disabled={
           // }
         >
           Checkout
         </Button>
       </div>
+      {show ? (
+        <PayModal
+          show={show}
+          toggle={() => {
+            setShow(!show);
+          }}
+          title="Checkout"
+          submitButtonTitle="Done"
+          submitButtonClick={() => pay()}
+          // disabled={}
+        >
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex fs-4">
+              Pay: <div className="ps-2 text-primary">Rs {subTotal}</div>
+            </div>
+            <div className="m-4 qrCodeContainer">
+              <img src={require("../assets/images/QR_code.png")} alt="qrCode" />
+            </div>
+          </div>
+        </PayModal>
+      ) : null}
     </>
   );
 };
