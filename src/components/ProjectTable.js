@@ -162,7 +162,7 @@ const ProjectTables = ({
           </Table>
           <div className="border-top"></div>
           <div className="p-4 d-flex justify-content-end align-items-center">
-            <h5 className="subTotal">SubTotal:</h5>
+            <h5 className="subTotal">SubTotal :</h5>
             <h4 className="subTotalAmount text-primary">
               Rs {calculateTotal()}
             </h4>

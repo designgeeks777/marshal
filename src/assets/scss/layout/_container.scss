@@ -386,12 +386,10 @@ button:hover {
 
 .subTotal {
   position: relative;
-  right: 15em;
 }
 
 .subTotalAmount {
   position: relative;
-  right: 8em;
 }
 
 // ..cartImgContainer {
@@ -415,6 +413,14 @@ button:hover {
     max-width: 70px;
     max-height: 68px;
     padding: 24px 8px 24px 8px;
+  }
+
+  .subTotal {
+    right: 14em;
+  }
+
+  .subTotalAmount {
+    right: 8em;
   }
 }
 
