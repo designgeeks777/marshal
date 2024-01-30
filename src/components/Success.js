@@ -20,7 +20,7 @@ const Success = () => {
       </div>
       <div className="p-4 d-flex justify-content-center">
         <Button
-          className="me-3 btn btn-lg btn-block btn-border-radius paymentSuccessBtns"
+          className="me-3 btn btn-lg  btn-border-radius paymentSuccessBtns"
           color="primary"
           onClick={() => {
             navigate("/welcome");

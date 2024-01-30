@@ -194,7 +194,7 @@ button:hover {
   color: $white !important;
 }
 
-//Welcome page bookDisplay css
+//Welcome page booksList css
 .displayImgContainer {
   max-width: 441px;
   height: auto;
@@ -341,10 +341,18 @@ button:hover {
   height: 48px;
   border: 1px solid $table-border-color;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   outline: none;
+}
+
+//to hide cartQuantity number arrows
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; 
 }
 
 .cartPrice {
@@ -445,4 +453,21 @@ button:hover {
   .paymentSuccessBtns {
     padding: 10px 48px;
   }
+}
+
+//header cart icon
+.cartIcon {
+  position: relative;
+  cursor: pointer;
+}
+
+.cartIconQuantity {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: $primary;
+  color: $white;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 0.8rem;
 }

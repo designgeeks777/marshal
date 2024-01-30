@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navbar, Collapse, Dropdown, Button } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { CartContext } from "../services/CartContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -11,6 +13,24 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
   const navigate = useNavigate();
+  const location = useLocation();
+
+  //to scroll to books display section in welcome page
+  const scrollToBooksListSection = () => {
+    if (location.pathname.substring(1) === "welcome") {
+      const section = document.getElementById("sectionId");
+      if (section) {
+        window.scrollTo({
+          top: section.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    } else {
+      navigate("/welcome", { state: { from: "cart" } });
+    }
+  };
+
+  const { cartItems } = useContext(CartContext);
 
   return (
     <>
@@ -39,19 +59,25 @@ const Header = () => {
               <div className="me-auto nav-link text-black">
                 About Prophet Marshall Peter
               </div>
-              <div className="mx-4 buyBooksBtn fw-bold btn btn-md btn-block  btn-border-radius">
+              <div
+                className="mx-4 buyBooksBtn fw-bold btn btn-md btn-block  btn-border-radius"
+                onClick={scrollToBooksListSection}
+              >
                 Buy Books
               </div>
-              <img
-                alt="cart"
-                src={require("../assets/images/shoppingCart.png")}
-                width={24}
-                height={24}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/cart");
-                }}
-              />
+              <div className="cartIcon">
+                <img
+                  alt="cart"
+                  src={require("../assets/images/shoppingCart.png")}
+                  width={36}
+                  height={36}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/cart");
+                  }}
+                />
+                <span className="cartIconQuantity">{cartItems.length}</span>
+              </div>
             </div>
             {/* </DropdownToggle> */}
             {/* <DropdownMenu>

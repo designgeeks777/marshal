@@ -1,125 +1,43 @@
-import React, { useEffect, useState } from "react";
-import BookDisplay from "../components/BookDisplay";
-import ProjectTables from "../components/ProjectTable";
+import React, { useContext, useEffect, useState } from "react";
+import CartTable from "../components/CartTable";
 import { Button } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PayModal from "../components/PayModal";
+import { CartContext } from "../services/CartContext";
 
 const tableColumns = [
-  { path: "book", name: "Book" },
-  { path: "price", name: "price" },
-  { path: "quantity", name: "quantity" },
-  { path: "total", name: "total" },
-  { path: "action", name: "Remove" },
+  { column: "coverPic", name: "Book" },
+  { column: "bookname", name: "Book" },
+  { column: "price", name: "price" },
+  { column: "quantity", name: "quantity" },
+  { column: "total", name: "total" },
+  { column: "action", name: "Remove" },
 ];
 
 const Cart = () => {
-  const [tableData, setTableData] = useState([
-    {
-      id: "1",
-      price: "120",
-      title: "Vision of prophet",
-      image: "book1.png",
-      quantity: "1",
-      book: [{ title: "Vision of prophet", image: "book1.png" }],
-      action: "remove",
-    },
-    {
-      id: "2",
-      price: "120",
-      title: "Gods Vision for India",
-      image: "book1.png",
-      quantity: "1",
-      book: [{ title: "Gods Vision for India", image: "book1.png" }],
-      action: "remove",
-    },
-    {
-      id: "3",
-      price: "150",
-      title: "Gods Vision for India",
-      image: "book2.png",
-      quantity: "2",
-      book: [{ title: "Gods Vision for India", image: "book2.png" }],
-      action: "remove",
-    },
-    {
-      id: "4",
-      price: "150",
-      title: "Gods Vision for India",
-      image: "book1.png",
-      quantity: "1",
-      action: "remove",
-      book: [{ title: "Gods Vision for India", image: "book1.png" }],
-    },
-    {
-      id: "5",
-      price: "150",
-      title: "Gods Vision for India",
-      image: "book2.png",
-      quantity: "2",
-      action: "remove",
-      book: [{ title: "Gods Vision for India", image: "book2.png" }],
-    },
-    {
-      id: "6",
-      price: "200",
-      title: "Gods Vision for India",
-      action: "remove",
-      image: "book1.png",
-      quantity: "1",
-      book: [{ title: "Gods Vision for India", image: "book1.png" }],
-    },
-    {
-      id: "7",
-      action: "remove",
-      price: "250",
-      title: "Gods Vision for Europe",
-      image: "book2.png",
-      quantity: "2",
-      book: [{ title: "Gods Vision for Europe", image: "book2.png" }],
-    },
-    {
-      id: "8",
-      price: "300",
-      title: "Gods Vision for America",
-      image: "book1.png",
-      action: "remove",
-      quantity: "1",
-      book: [{ title: "Gods Vision for America", image: "book1.png" }],
-    },
-  ]);
+  const { getCartTotal } = useContext(CartContext);
 
-  // useEffect(() => {
-  // tableData.forEach((object) => {
-  //   object["action"] = "remove";
-  // });
-  // let modifiedData = tableData.map((books) => {
-  //   const { title, image, id } = books;
-  //   return { title, image, id };
-  // });
-  // let resultData = tableData.map((d) => {
-  //   return {
-  //     ...d,
-  //     book: modifiedData.filter(({ id }) => d.id === id),
-  //   };
-  // });
-  // // setTableData(resultData.reverse());
-  // setTableData((prevValue) => {
-  //   const newValue = prevValue + resultData.reverse();
-  //   return newValue;
-  // });
-  // console.log(resultData, "cartpage");
-  // }, []);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const pay = () => {
     navigate("/payment");
   };
 
-  const [subTotal, setSubTotal] = useState(0);
-  const handleCallback = (subtotalValue) => {
-    setSubTotal(subtotalValue);
-    console.log("subTotal", subtotalValue);
+  const location = useLocation();
+
+  //to scroll to books display section in welcome page
+  const scrollToBooksListSection = () => {
+    // if (location && location.columnname.substring(1) === "welcome") {
+    //   const section = document.getElementById("sectionId");
+    //   if (section) {
+    //     window.scrollTo({
+    //       top: section.offsetTop,
+    //       behavior: "smooth",
+    //     });
+    //   }
+    // } else {
+    navigate("/welcome", { state: { from: "cart" } });
+    // }
   };
 
   return (
@@ -143,20 +61,14 @@ const Cart = () => {
           />
         </div>
       </div>
-      <ProjectTables
-        tableData={tableData}
-        tableColumns={tableColumns}
-        parentCallback={handleCallback}
-      />
+      <CartTable tableColumns={tableColumns} />
       <div className="border-top"></div>
       <div className="p-4 d-flex justify-content-end ">
         <Button
           // className="btn py-2 mx-3 cartButtons"
           className="px-3 py-2 mx-3 btn btn-md btn-block"
           color="secondary"
-          onClick={() => {
-            navigate("/welcome");
-          }}
+          onClick={scrollToBooksListSection}
         >
           Check more books
         </Button>
@@ -186,7 +98,7 @@ const Cart = () => {
         >
           <div className="d-flex flex-column justify-content-center align-items-center">
             <div className="d-flex fs-4">
-              Pay: <div className="ps-2 text-primary">Rs {subTotal}</div>
+              Pay: <div className="ps-2 text-primary">Rs {getCartTotal()}</div>
             </div>
             <div className="m-4 qrCodeContainer">
               <img src={require("../assets/images/QR_code.png")} alt="qrCode" />

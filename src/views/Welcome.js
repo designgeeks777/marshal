@@ -1,48 +1,29 @@
-import BookDisplay from "../components/BookDisplay";
+import BooksList from "../views/BooksList";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const tableData = [
-  {
-    price: "120",
-    title: "Vision of prophet",
-    image: "book1.png",
-  },
-  {
-    price: "120",
-    title: "Gods Vision for India",
-    image: "book1.png",
-  },
-  {
-    price: "150",
-    title: "Gods Vision for India",
-    image: "book2.png",
-  },
-  {
-    price: "150",
-    title: "Gods Vision for India",
-    image: "book1.png",
-  },
-  {
-    price: "150",
-    title: "Gods Vision for India",
-    image: "book2.png",
-  },
-  {
-    price: "200",
-    title: "Gods Vision for India",
-    image: "book1.png",
-  },
-  {
-    price: "250",
-    title: "Gods Vision for Europe",
-    image: "book2.png",
-  },
-  {
-    price: "300",
-    title: "Gods Vision for America",
-    image: "book1.png",
-  },
-];
 const Welcome = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Access the state object to get the previous location
+    const { state } = location;
+    const section = document.getElementById("sectionId");
+    if (state && state.from) {
+      if (state.from === "cart") {
+        window.scrollTo({
+          top: section.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [location]);
+
+  useEffect(() => {
+    navigate("/welcome", { state: { from: "" } });
+  }, []);
+
   return (
     <>
       <div className="d-flex align-items-center flex-wrap">
@@ -103,7 +84,10 @@ const Welcome = () => {
           />
         </div>
       </div>
-      <BookDisplay tableData={tableData} />
+      <div id="sectionId">
+        <BooksList />
+        {/* <Products /> */}
+      </div>
     </>
   );
 };
