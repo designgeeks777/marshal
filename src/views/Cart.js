@@ -6,8 +6,7 @@ import PayModal from "../components/PayModal";
 import { CartContext } from "../services/CartContext";
 
 const tableColumns = [
-  { column: "coverPic", name: "Book" },
-  { column: "bookname", name: "Book" },
+  { column: "book", name: "Book" },
   { column: "price", name: "price" },
   { column: "quantity", name: "quantity" },
   { column: "total", name: "total" },

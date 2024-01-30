@@ -47,17 +47,19 @@ const CartTable = ({ children, tableColumns }) => {
           {tableColumns.map(({ column }) => {
             return (
               <td className="py-3" key={column}>
-                {column === "bookname" || column === "coverPic" ? (
+                {column === "book" ? (
                   <div className="d-flex align-items-center">
-                    {column === "coverPic" && (
-                      <div className="cartImgContainer">
-                        <img src={cartItem[column]} alt="avatar" />
-                      </div>
-                    )}
-                    {column === "bookname" && (
-                      <div className="ms-4">
-                        <h5 className="mb-0 fw-normal">{cartItem[column]}</h5>
-                      </div>
+                    {cartItem[column].length !== 0 && (
+                      <>
+                        <div className="cartImgContainer">
+                          <img src={cartItem[column]?.coverPic} alt="avatar" />
+                        </div>
+                        <div className="ms-4">
+                          <h5 className="mb-0 fw-normal">
+                            {capitalize(cartItem[column]?.bookname)}
+                          </h5>
+                        </div>
+                      </>
                     )}
                   </div>
                 ) : column === "price" ? (
