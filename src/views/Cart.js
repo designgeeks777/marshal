@@ -6,7 +6,8 @@ import PayModal from "../components/PayModal";
 import { CartContext } from "../services/CartContext";
 
 const tableColumns = [
-  { column: "book", name: "Book" },
+  { column: "coverPic", name: "Book" },
+  { column: "bookname", name: "" },
   { column: "price", name: "price" },
   { column: "quantity", name: "quantity" },
   { column: "total", name: "total" },
@@ -14,8 +15,8 @@ const tableColumns = [
 ];
 
 const Cart = () => {
-  const { getCartTotal } = useContext(CartContext);
-
+  const { getCartTotal, cartItems } = useContext(CartContext);
+  console.log("CART PAGE>>> ", cartItems);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const pay = () => {

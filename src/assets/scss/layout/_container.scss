@@ -471,3 +471,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 2px 8px;
   font-size: 0.8rem;
 }
+
+/* Center align only the first th and td */
+table th:first-child,
+table td:first-child {
+  display: flex;
+  justify-content: center;
+}

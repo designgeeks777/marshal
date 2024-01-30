@@ -19,7 +19,7 @@ const CartTable = ({ children, tableColumns }) => {
     return (
       <th key={book} className="nowrap border-bottom">
         <div className="cartHeadings">
-          {book === "action" ? "" : capitalize(name)}
+          {book === "action" ? "" : name === "" ? "" : capitalize(name)}
         </div>
       </th>
     );
@@ -39,27 +39,31 @@ const CartTable = ({ children, tableColumns }) => {
     }
   };
 
+  useEffect(() => {
+    console.log("CRART TABLE", cartItems);
+  }, []);
   // get table row book
   const tdData = () => {
+    console.log("TABLE", cartItems);
     return cartItems.map((cartItem, index) => {
       return (
         <tr key={index}>
           {tableColumns.map(({ column }) => {
             return (
               <td className="py-3" key={column}>
-                {column === "book" ? (
+                {column === "bookname" || column === "coverPic" ? (
                   <div className="d-flex align-items-center">
-                    {cartItem[column].length !== 0 && (
-                      <>
-                        <div className="cartImgContainer">
-                          <img src={cartItem[column]?.coverPic} alt="avatar" />
-                        </div>
-                        <div className="ms-4">
-                          <h5 className="mb-0 fw-normal">
-                            {capitalize(cartItem[column]?.bookname)}
-                          </h5>
-                        </div>
-                      </>
+                    {column === "coverPic" && (
+                      <div className="cartImgContainer">
+                        <img src={cartItem[column]} alt="avatar" />
+                      </div>
+                    )}
+                    {column === "bookname" && (
+                      <div className="">
+                        <h5 className="mb-0 fw-normal">
+                          {capitalize(cartItem[column])}
+                        </h5>
+                      </div>
                     )}
                   </div>
                 ) : column === "price" ? (
@@ -69,6 +73,7 @@ const CartTable = ({ children, tableColumns }) => {
                     <input
                       className="cartQuantity shadow-none me-2 mb-0"
                       type="number"
+                      min="1"
                       value={
                         editedQuantities[cartItem._id] !== undefined
                           ? editedQuantities[cartItem._id]
@@ -112,7 +117,9 @@ const CartTable = ({ children, tableColumns }) => {
           <Spinner color="primary" className="table-spinner" />
         </div>
       ) : cartItems.length === 0 ? (
-        <div style={{ height: 250 }}>Your cart is empty</div>
+        <div style={{ height: 250, textAlign: "center", paddingTop: 12 }}>
+          <h3>Your cart is empty</h3>
+        </div>
       ) : (
         <>
           <Table className="no-wrap mt-3 align-middle" responsive borderless>

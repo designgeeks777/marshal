@@ -25,6 +25,7 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
+    console.log("ADDED", item, item.quantity);
   };
 
   const removeFromCart = (item) => {
@@ -68,16 +69,16 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    cartItems.forEach((object) => {
-      object["action"] = "remove";
-    });
-    const combinedCartItems = Object.entries(cartItems).map(([key, value]) => ({
-      ...value,
-      book: { bookname: value.bookname, coverPic: value.coverPic },
-    }));
+    // cartItems.forEach((object) => {
+    //   object["action"] = "remove";
+    // });
+    // const combinedCartItems = Object.entries(cartItems).map(([key, value]) => ({
+    //   ...value,
+    //   book: { bookname: value.bookname, coverPic: value.coverPic },
+    // }));
 
-    // console.log(combinedCartItems);
-    localStorage.setItem("cartItems", JSON.stringify(combinedCartItems));
+    // console.log("combinedCartItems", combinedCartItems);g
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   useEffect(() => {

@@ -58,7 +58,6 @@ const BooksList = () => {
     );
     return (
       <div className="row m-0 p-0">
-        <div>CART {cartItems.length}</div>
         {paginatedTableData.map((book) => (
           <div key={book._id} className="col-md-6 bookDisplayItemContainer">
             <div className="row">

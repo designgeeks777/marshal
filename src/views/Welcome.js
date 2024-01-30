@@ -86,7 +86,6 @@ const Welcome = () => {
       </div>
       <div id="sectionId">
         <BooksList />
-        {/* <Products /> */}
       </div>
     </>
   );
