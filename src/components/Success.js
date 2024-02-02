@@ -10,23 +10,25 @@ const Success = () => {
   const url = `${BASEURL}books/`;
   const { cartItems } = useContext(CartContext);
   useEffect(() => {
-    if (cartItems.length) {
+    if (cartItems.length > 0) {
       // handleDownloadClick();
     }
   }, []);
 
   const handleDownloadClick = () => {
     // Replace these URLs and file names with your actual file URLs and names
-    const filesToDownload = cartItems.map((file) => {
-      const { bookpdf, bookname, _id } = file;
-      return { bookpdf, bookname, _id };
-    });
-    console.log(filesToDownload);
+    if (cartItems.length > 0) {
+      const filesToDownload = cartItems.map((file) => {
+        const { bookpdf, bookname, _id } = file;
+        return { bookpdf, bookname, _id };
+      });
+      console.log(filesToDownload);
 
-    filesToDownload.forEach((file) => {
-      updateDownloadCount(file._id);
-      downloadFile(file.bookpdf, file.bookname);
-    });
+      filesToDownload.forEach((file) => {
+        updateDownloadCount(file._id);
+        downloadFile(file.bookpdf, file.bookname);
+      });
+    }
   };
   const updateDownloadCount = async (id) => {
     try {
@@ -37,9 +39,6 @@ const Success = () => {
     }
   };
   const downloadFile = (bookpdf, bookname) => {
-    // const url = bookpdf;
-    // const pathname = new URL(url).pathname;
-    // const filename = pathname.split("/").pop();
     axios
       .get(bookpdf, { responseType: "blob" })
       .then((response) => {
@@ -67,7 +66,7 @@ const Success = () => {
       <div className="text-success fs-2 my-4">
         Your transaction ID is 12345678. Please save the ID{" "}
       </div>
-      <div className="mb-4">
+      <div className="mb-4 text-center">
         Your book(s) are getting downloaded. Please dont refresh/change the page
         till download completes. If your download didnt start automatically,
         click below

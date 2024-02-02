@@ -339,10 +339,16 @@ button:hover {
     padding-left: 0;
   }
 
-  .bookImgContainer,
+  .bookImgContainer {
+    width: 48%;
+  }
   .bookDetails {
     width: 48%;
     padding: 0 10px;
+  }
+  .buttonContainer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -365,8 +371,9 @@ button:hover {
     padding: 0 10px;
   }
 
-  .button-container {
+  .buttonContainer {
     flex-direction: column;
+    align-items: flex-start;
   }
 }
 

@@ -37,7 +37,8 @@ const BooksList = () => {
     getBooks();
   }, []);
 
-  const { cartItems, addToCart } = useContext(CartContext);
+  const { cartItems, addToCart, selectedItem, setSelectedItem } =
+    useContext(CartContext);
 
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 6;
@@ -58,19 +59,6 @@ const BooksList = () => {
     );
 
     const navigate = useNavigate();
-    const [selectedItem, setSelectedItem] = useState(null);
-    const handleAddCart = async (book) => {
-      try {
-        await addToCart(book);
-        setSelectedItem(book);
-        console.log("handleAddCart", selectedItem);
-        setTimeout(() => {
-          setSelectedItem(null);
-        }, 2000);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
 
     return (
       <div className="bookList">
@@ -84,33 +72,36 @@ const BooksList = () => {
               />
             </div>
             <div className="bookDetails">
-              <legend className="mb-0 ">
-                {capitalize(book.bookname)}
-              </legend>
+              <legend className="mb-0 ">{capitalize(book.bookname)}</legend>
               <p className="fw-bold fs-5">${book.price}</p>
-              <div className="buttonContainer">
-                <Button
-                  color="secondary"
-                  className="btn btn-md btn-block btn-border-radius"
-                  onClick={() => {
-                    handleAddCart(book);
-                  }}
-                >
-                  Add to Cart
-                </Button>
-                {cartItems.length > 0 && (
-                  <small
-                    className="ps-4 text-primary seeCart"
-                    style={{ cursor: "pointer" }}
+              <div style={{ position: "relative" }}>
+                <div className="buttonContainer">
+                  <Button
+                    color="secondary"
+                    className="btn btn-md btn-block btn-border-radius"
                     onClick={() => {
-                      navigate("/cart");
+                      addToCart(book);
                     }}
                   >
-                    See Cart<i className="bi bi-cart-fill"></i>
-                  </small>
-                )}
+                    Add to Cart
+                  </Button>
+                  {cartItems.length > 0 && (
+                    <small
+                      className="ps-4 text-primary seeCart"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
+                    >
+                      See Cart<i className="bi bi-cart-fill"></i>
+                    </small>
+                  )}
+                </div>
                 {selectedItem === book && (
-                  <div className="d-flex align-items-center text-success pt-1">
+                  <div
+                    className="d-flex align-items-center text-success pt-1"
+                    style={{ position: "absolute" }}
+                  >
                     <i className="bi bi-check-circle-fill"></i>
                     <small>Added to cart succesfully</small>
                   </div>
@@ -120,57 +111,6 @@ const BooksList = () => {
           </div>
         ))}
       </div>
-      // <div className="row m-0 p-0">
-      //   {paginatedTableData.map((book) => (
-      //     <div key={book._id} className="col-md-6 bookDisplayItemContainer">
-      //       <div className="row">
-      //         <div className="col-6 pe-0 responsiveCol align-items-center">
-      //           <div className="bookImgContainer">
-      //             <img
-      //               alt={`Book ${book._id}`}
-      //               className="img-fluid"
-      //               src={book.coverPic}
-      //             />
-      //           </div>
-      //         </div>
-      //         <div className="bookInfo col-6 responsiveCol">
-      //           <legend className="mb-0 fw-bold">
-      //             {capitalize(book.bookname)}
-      //           </legend>
-      //           <p className="fw-bold fs-5">Rs {book.price}</p>
-      //           <div>
-      // <Button
-      //   color="secondary"
-      //   className="btn btn-md btn-block btn-border-radius buttons"
-      //   onClick={() => {
-      //     handleAddCart(book);
-      //   }}
-      // >
-      //   Add to Cart
-      // </Button>
-      // {cartItems.length > 0 && (
-      //   <small
-      //     className="ps-4 text-primary seeCart"
-      //     style={{ cursor: "pointer" }}
-      //     onClick={() => {
-      //       navigate("/cart");
-      //     }}
-      //   >
-      //     See Cart<i className="bi bi-cart-fill"></i>
-      //   </small>
-      // )}
-      // {selectedItem === book && (
-      //   <div className="d-flex align-items-center text-success pt-1">
-      //     <i className="bi bi-check-circle-fill"></i>
-      //     <small>Added to cart succesfully</small>
-      //   </div>
-      // )}
-      //           </div>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   ))}
-      // </div>
     );
   };
 
