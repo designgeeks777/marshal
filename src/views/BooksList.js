@@ -72,14 +72,6 @@ const BooksList = () => {
       }
     };
 
-    const products = [
-      { bookname: "Product 1", price: 19.99, coverPic: "product1.jpg" },
-      { bookname: "Product 2", price: 19.99, coverPic: "product2.jpg" },
-      { bookname: "Product 3", price: 19.99, coverPic: "product3.jpg" },
-      { bookname: "Product 2", price: 29.99, coverPic: "product4.jpg" },
-      // Add more products as needed
-    ];
-
     return (
       <div className="bookList">
         {paginatedTableData.map((book, index) => (
