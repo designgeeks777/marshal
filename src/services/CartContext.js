@@ -76,7 +76,6 @@ export const CartProvider = ({ children }) => {
     //   book: { bookname: value.bookname, coverPic: value.coverPic },
     // }));
 
-    // console.log("combinedCartItems", combinedCartItems);g
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 

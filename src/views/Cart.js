@@ -16,7 +16,6 @@ const tableColumns = [
 
 const Cart = () => {
   const { getCartTotal, cartItems } = useContext(CartContext);
-  console.log("CART PAGE>>> ", cartItems);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const pay = () => {
@@ -26,18 +25,8 @@ const Cart = () => {
   const location = useLocation();
 
   //to scroll to books display section in welcome page
-  const scrollToBooksListSection = () => {
-    // if (location && location.columnname.substring(1) === "welcome") {
-    //   const section = document.getElementById("sectionId");
-    //   if (section) {
-    //     window.scrollTo({
-    //       top: section.offsetTop,
-    //       behavior: "smooth",
-    //     });
-    //   }
-    // } else {
-    navigate("/welcome", { state: { from: "cart" } });
-    // }
+  const scrollToBooksListSection = (sectionId) => {
+    navigate("/welcome", { state: { from: "cart", sectionId: sectionId } });
   };
 
   return (
@@ -62,13 +51,20 @@ const Cart = () => {
         </div>
       </div>
       <CartTable tableColumns={tableColumns} />
-      <div className="border-top"></div>
+      <div className="subTotalContainer">
+        {/* // <div className="p-4 d-flex justify-content-end align-items-center">  */}
+        <h5 className="subTotal">SubTotal :</h5>
+        <h4 className="subTotalAmount text-primary">Rs {getCartTotal()}</h4>
+        {/* // </div>  */}
+      </div>
       <div className="p-4 d-flex justify-content-end ">
         <Button
           // className="btn py-2 mx-3 cartButtons"
           className="px-3 py-2 mx-3 btn btn-md btn-block"
           color="secondary"
-          onClick={scrollToBooksListSection}
+          onClick={() => {
+            scrollToBooksListSection("booksSection");
+          }}
         >
           Check more books
         </Button>

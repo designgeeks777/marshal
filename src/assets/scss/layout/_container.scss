@@ -94,6 +94,7 @@ cursor: pointer;
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
   background-color: $primary !important;
   border-color: $primary !important;
+  transform: scale(0.95);
 }
 
 .btn-secondary {
@@ -107,6 +108,7 @@ cursor: pointer;
   background-color: $modal-btn-hover-bg-color !important;
   border-color: $primary !important;
   color: $primary !important;
+  transform: scale(0.95);
 }
 
 .table-actions-button {
@@ -119,6 +121,7 @@ cursor: pointer;
 .table-actions-button:hover {
   // color: #008BCE;
   opacity: 90%;
+  transform: scale(0.95);
 }
 
 .buttons {
@@ -192,134 +195,178 @@ button:hover {
   background-color: $primary !important;
   border-color: $primary !important;
   color: $white !important;
+  transform: scale(0.95);
+}
+
+.buyBooksBtn:active, .buyBooksBtn:focus {
+  background-color: $primary !important;
+  border-color: $primary !important;
+  color: $white !important;
+  transform: scale(0.95);
 }
 
 //Welcome page booksList css
 .displayImgContainer {
-  max-width: 441px;
-  height: auto;
-  margin-bottom: 20px;
-  width: 100%;
+  flex: 1;
+  margin: 1%;
 }
 
 .displayImgContainer img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .description {
-  flex: 1;
+  flex: 2;
+  margin: 1%;
 }
 
-.booksHeadingIcon {
-  max-width: 200px;
-  max-height: 120px;
-  width: 100%;
-  height: 100%;
+@media (max-width: 700px) {
+  .displayImgContainer,.description{
+    flex: 1 1 100%;
+  }
 }
-
-.booksIcons  {
-  max-width: 88px;
-  max-height: 66px;
-  width: 100%;
-  height: 100%;
+@media (max-width: 1024px) {
+  .displayImgContainer,.description{
+    flex: 1 1 100%;
+  }
 }
 
 
-.bookDisplayContainer{
-  // display: flex;
-  // flex-wrap: wrap;
-  padding: 12px;
+.booksHeadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  margin: 6em auto; 
 }
 
-// .bookDisplayItemContainer {
-//   display: flex;
-//   flex-basis: calc(50% - 20px);
-//   margin: 10px;
-// }
-
-.bookDisplayItemContainer {
-  margin: 28px 0px;
-  padding: 0;
+.booksStackImage {
+  width: 140px;
+  height: auto; 
 }
 
-// div.bookDisplayItemContainer:nth-of-type(even){
-//   padding-right: 0px !important; 
-// }
+.booksHeadingImage {
+  width: 250px; 
+  height: auto; 
+}
 
-// div.bookDisplayItemContainer:nth-of-type(odd){
-//   padding-left: 0px !important; 
-// }
+.bookIconLeft {
+  margin-right: 3em;
+}
+.bookIconRight {
+  margin-left: 3em;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .booksHeadingImage {
+    width: 40%; 
+  }
+  .booksStackImage{
+    width: 25%;
+  }
+  .bookIconLeft {
+    margin-right: 2em;
+  }
+  .bookIconRight {
+    margin-left: 2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .booksStackImage {
+    width: 20%;
+  }
+  .booksHeadingImage {
+    width: 46%; 
+  }
+  .bookIconLeft {
+    margin-right: 1em;
+  }
+  .bookIconRight {
+    margin-left: 1em;
+  }
+}
+
+.bookList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  padding-left: 56px;
+}
+
+.bookItem {
+  display: flex;
+  margin-bottom: 60px;
+  height: 176px;
+  width: 48%;
+  padding: 0 10px;
+}
 
 .bookImgContainer {
-  border-radius: $btn-border-radius;
-  border: 1px solid $primary;
-  // flex: 1;
-  padding: 24px 8px 24px 8px;
-  max-width: 223px;
-  max-height: 216px;
-  height: auto;
-  width: 100%;
+  width: 30%; 
+  position: relative;
 }
 
-.bookImgContainer img {
+.bookImg {
   width: 100%;
   height: 100%;
+  padding: 24px 8px;
   object-fit: cover;
+  border-radius: $btn-border-radius;
+  border: 1px solid $primary;
 }
 
-.bookInfo {
-  // flex: 1; 
-  padding: 0px 15px;
+.bookDetails {
+  width: 70%;
+  padding-left: 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-// .addToCartBtn {
-//   max-width: 150px;
-//   max-height: 44px;
-// }
+.buttonContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
 
-// @media (max-width: 600px) {
-//   .responsiveCol {
-//     width: 50% !important;
-//   }.booksHeadingIcon
-// }
-
-@media (min-width: 600px) {
-  /* Adjust styles for screens larger than 600px */
-  .displayImgContainer {
-    max-width: 200px; /* Adjust maximum width for larger screens */
+@media (max-width: 820px) {
+  .bookList {
+    padding-left: 0;
   }
 
-  .booksHeading {
-    padding: 1.5rem;
-    margin: 3rem;
+  .bookImgContainer,
+  .bookDetails {
+    width: 48%;
+    padding: 0 10px;
+  }
+}
+
+/* Media Query for small screens */
+@media (max-width: 480px) {
+  .bookList {
+    padding-left: 0;
   }
 
-  .booksHeadingIcon {
-    max-width: 264px;
-    max-height: 169px;
-  }
-  
-  .booksIcons {
-    max-width: 182px;
-    max-height: 120px;
-    // max-width: 124px;
-    // max-height: 80px;
+  .bookItem {
+    width: 100%;
   }
 
-  .bookDisplayContainer{ 
-    padding: 24px;
+  .bookImgContainer {
+    width: 50%;
   }
 
-  .bookDisplayItemContainer {
-    // display: flex;
-    // flex-basis: calc(50% - 60px);
-    // margin: 30px;
-    // padding: 8px 60px;
-    padding: 0px 24px;
+  .bookDetails {
+    width: 50%;
+    padding: 0 10px;
+  }
+
+  .button-container {
+    flex-direction: column;
   }
 }
 
@@ -393,11 +440,28 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .subTotal {
-  position: relative;
+  right: 0;
+  position: absolute;
+  width: 80%;
+  height: 50%;
 }
 
 .subTotalAmount {
+  position: absolute;
+  right: 0;
+  position: absolute;
+  width: 46%;
+  height: 50%;
+}
+
+.subTotalContainer {
+  border-top: 1px solid $table-border-color !important;
+  border-bottom: 1px solid $table-border-color !important;
   position: relative;
+  width: 100%;
+  padding-bottom: 4%;
+  padding-top: 2%;
+  min-height: 70px;
 }
 
 // ..cartImgContainer {
@@ -410,7 +474,7 @@ input[type=number]::-webkit-outer-spin-button {
 //   border-radius: $btn-border-radius-lg !important;
 // }
 
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   /* Adjust styles for screens larger than 600px */
   .cartPageIcon {
     max-width: 310px;
@@ -424,11 +488,11 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   .subTotal {
-    right: 14em;
+    width: 44%;
   }
 
   .subTotalAmount {
-    right: 8em;
+    width: 28%;
   }
 }
 
@@ -477,4 +541,22 @@ table th:first-child,
 table td:first-child {
   display: flex;
   justify-content: center;
+}
+
+.stickyHeader{
+  background-color: $white;
+  transition: background-color 0.3s ease;
+  z-index: 9999;
+}
+
+.stickyHeader.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.5); /* Bottom box shadow */
+  background-color: $white; /* Adjust background color if needed */
+}
+
+.seeCart:active, .seeCart:focus, .seeCart:hover {
+  transform: scale(0.95);
 }

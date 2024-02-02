@@ -28,7 +28,9 @@ const CartTable = ({ children, tableColumns }) => {
   const [editedQuantities, setEditedQuantities] = useState({});
 
   const handleQuantityChange = (bookId, newQuantity) => {
-    if (!isNaN(newQuantity) && newQuantity >= 0) {
+    newQuantity = newQuantity.replace(/[^0-9]/g, "");
+    // newQuantity = Math.max(1, parseInt(newQuantity, 10));
+    if (!isNaN(newQuantity) || newQuantity >= 1) {
       setEditedQuantities((prevQuantities) => ({
         ...prevQuantities,
         [bookId]: newQuantity,
@@ -39,12 +41,18 @@ const CartTable = ({ children, tableColumns }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("CRART TABLE", cartItems);
-  }, []);
+  const handleBlur = (cartItem, value) => {
+    let val = Math.max(1, value);
+    setEditedQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [cartItem._id]: val,
+    }));
+    updateQuantity(cartItem._id, val);
+  };
+
+  useEffect(() => {}, []);
   // get table row book
   const tdData = () => {
-    console.log("TABLE", cartItems);
     return cartItems.map((cartItem, index) => {
       return (
         <tr key={index}>
@@ -72,8 +80,11 @@ const CartTable = ({ children, tableColumns }) => {
                   <div className="ps-3">
                     <input
                       className="cartQuantity shadow-none me-2 mb-0"
-                      type="number"
-                      min="1"
+                      type="text"
+                      // min="1"
+                      onBlur={(e) => {
+                        handleBlur(cartItem, e.target.value);
+                      }}
                       value={
                         editedQuantities[cartItem._id] !== undefined
                           ? editedQuantities[cartItem._id]
@@ -86,7 +97,7 @@ const CartTable = ({ children, tableColumns }) => {
                   </div>
                 ) : column === "total" ? (
                   <div className="cartTotal">
-                    Rs {(cartItem["price"] * cartItem["quantity"]).toFixed(2)}
+                    Rs {(cartItem.price * cartItem.quantity).toFixed(2)}
                   </div>
                 ) : column === "action" ? (
                   <div
@@ -113,7 +124,14 @@ const CartTable = ({ children, tableColumns }) => {
   return (
     <div>
       {isLoading ? (
-        <div style={{ height: 250 }}>
+        <div
+          style={{
+            height: 250,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Spinner color="primary" className="table-spinner" />
         </div>
       ) : cartItems.length === 0 ? (
@@ -130,12 +148,11 @@ const CartTable = ({ children, tableColumns }) => {
             </thead>
             <tbody>{tdData()}</tbody>
           </Table>
-          <div className="border-top"></div>
+          {/* <div className="border-top"></div>
           <div className="p-4 d-flex justify-content-end align-items-center">
             <h5 className="subTotal">SubTotal :</h5>
             <h4 className="subTotalAmount text-primary">Rs {getCartTotal()}</h4>
-          </div>
-          <div className="px-4"></div>
+          </div> */}
         </>
       )}
     </div>

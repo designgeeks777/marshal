@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Navbar, Collapse, Dropdown, Button } from "reactstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Navbar, Collapse, Dropdown, Button, Row, Col } from "reactstrap";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { CartContext } from "../services/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,29 +14,57 @@ const Header = () => {
   };
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   //to scroll to books display section in welcome page
-  const scrollToBooksListSection = () => {
+  const scrollToBooksListSection = (sectionId) => {
     if (location.pathname.substring(1) === "welcome") {
-      const section = document.getElementById("sectionId");
+      const section = document.getElementById(sectionId);
       if (section) {
-        window.scrollTo({
-          top: section.offsetTop,
-          behavior: "smooth",
-        });
+        setTimeout(() => {
+          window.scrollTo({
+            //jerking for buy books from cart page
+            top: section.offsetTop - (isSticky ? 50 : 0),
+            // top: section.offsetTop - 50,
+            behavior: "smooth",
+          });
+        }, 0);
       }
     } else {
-      navigate("/welcome", { state: { from: "cart" } });
+      navigate("/welcome", {
+        state: { from: "cart", sectionId: sectionId },
+      });
     }
   };
 
   const { cartItems } = useContext(CartContext);
 
   return (
-    <>
+    <div className={`stickyHeader ${isSticky ? "sticky" : ""}`}>
       <Navbar className="p-4 bg-white text-primary" dark expand="md">
-        <div className="me-3 d-flex bg-gradient circle-box"></div>
-        <h3 className="me-auto mb-0 gradient">Prophet Marshall Peter</h3>
+        {/* <Row className="w-100 me-auto">
+          <Col
+            xs={10}
+            md={6}
+            lg={6}
+            className="d-flex align-items-center position-relative"
+          > */}
+        <div className=" d-flex align-items-center">
+          <div className="d-flex bg-gradient circle-box me-2"></div>
+          <h3 className="me-auto mb-0 gradient">Prophet Marshall Peter</h3>
+        </div>
+        {/* </Col>
+          <Col xs={2} md={6} lg={6} className="d-flex justify-content-end"> */}
         <div className="hstack gap-2">
           <Button
             color="primary"
@@ -51,42 +79,49 @@ const Header = () => {
             )}
           </Button>
         </div>
-
-        <Collapse navbar isOpen={isOpen}>
+        {/* </Col> */}
+        <Collapse navbar isOpen={isOpen} className="">
           <Dropdown isOpen={dropdownOpen} toggle={toggle}>
             {/* <DropdownToggle color="transparent"> */}
             <div className="d-flex align-items-center">
-              <div className="me-auto nav-link text-black">
+              <div
+                className="me-auto nav-link text-black"
+                onClick={() => {
+                  scrollToBooksListSection("aboutSection");
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 About Prophet Marshall Peter
               </div>
               <div
                 className="mx-4 buyBooksBtn fw-bold btn btn-md btn-block  btn-border-radius"
-                onClick={scrollToBooksListSection}
+                onClick={() => {
+                  scrollToBooksListSection("booksSection");
+                }}
               >
                 Buy Books
               </div>
-              <div className="cartIcon">
+              <div
+                className="cartIcon"
+                onClick={() => {
+                  navigate("/cart");
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 <img
                   alt="cart"
                   src={require("../assets/images/shoppingCart.png")}
                   width={36}
                   height={36}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    navigate("/cart");
-                  }}
                 />
                 <span className="cartIconQuantity">{cartItems.length}</span>
               </div>
             </div>
-            {/* </DropdownToggle> */}
-            {/* <DropdownMenu>
-              <DropdownItem onClick={logOut}>Logout</DropdownItem>
-            </DropdownMenu> */}
           </Dropdown>
         </Collapse>
+        {/* </Row> */}
       </Navbar>
-    </>
+    </div>
   );
 };
 
