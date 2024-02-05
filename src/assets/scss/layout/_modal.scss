@@ -29,6 +29,8 @@
 }
 .modal-footer {
     border-top: none;
+    display: flex;
+    justify-content: center;
 }
 
 .modal-btn-primary{
@@ -55,4 +57,10 @@
     background-color: $modal-btn-hover-bg-color !important;
     border-color: $modal-btn-hover-border-color !important;
     color: $modal-btn-hover-color !important;
+}
+
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: $modal-width;
+    }
 }

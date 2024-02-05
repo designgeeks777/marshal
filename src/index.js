@@ -5,7 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HashRouter } from "react-router-dom";
 import Loader from "./layouts/loader/Loader";
-import { LoaderContextProvider } from "./LoaderContext";
+import { LoaderContextProvider } from "./services/LoaderContext";
+import { CartProvider } from "./services/CartContext";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -13,9 +14,11 @@ const root = createRoot(rootElement);
 root.render(
   <Suspense fallback={<Loader />}>
     <LoaderContextProvider>
+      <CartProvider>
         <HashRouter>
           <App />
         </HashRouter>
+      </CartProvider>
     </LoaderContextProvider>
   </Suspense>
 

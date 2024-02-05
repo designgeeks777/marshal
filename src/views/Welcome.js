@@ -1,48 +1,29 @@
-import BookDisplay from "../components/BookDisplay";
+import BooksList from "../views/BooksList";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const tableData = [
-  {
-    price: "120",
-    title: "Vision of prophet",
-    image: "book1.png",
-  },
-  {
-    price: "120",
-    title: "Gods Vision for India",
-    image: "book1.png",
-  },
-  {
-    price: "150",
-    title: "Gods Vision for India",
-    image: "book2.png",
-  },
-  {
-    price: "150",
-    title: "Gods Vision for India",
-    image: "book1.png",
-  },
-  {
-    price: "150",
-    title: "Gods Vision for India",
-    image: "book2.png",
-  },
-  {
-    price: "200",
-    title: "Gods Vision for India",
-    image: "book1.png",
-  },
-  {
-    price: "250",
-    title: "Gods Vision for Europe",
-    image: "book2.png",
-  },
-  {
-    price: "300",
-    title: "Gods Vision for America",
-    image: "book1.png",
-  },
-];
 const Welcome = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Access the state object to get the previous location
+    const { state } = location;
+    const section = document.getElementById("sectionId");
+    if (state && state.from) {
+      if (state.from === "cart") {
+        window.scrollTo({
+          top: section.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [location]);
+
+  useEffect(() => {
+    navigate("/welcome", { state: { from: "" } });
+  }, []);
+
   return (
     <>
       <div className="d-flex align-items-center flex-wrap">
@@ -80,30 +61,32 @@ const Welcome = () => {
           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         </div>
       </div>
-      <div className="p-4 m-5 d-flex align-items-center justify-content-center">
-        <img
-          src={require("../assets/images/booksIcon.png")}
-          alt="booksIcon"
-          width={182}
-          height={120}
-          className="booksIcons"
-        />
-        <img
-          src={require("../assets/images/booksHeading.png")}
-          alt="booksHeading"
-          width={259}
-          height={129}
-          className="booksHeading"
-        />
-        <img
-          src={require("../assets/images/booksIcon.png")}
-          alt="booksIcon"
-          width={182}
-          height={120}
-          className="booksIcons"
-        />
+      <div className="row d-flex align-items-center text-center booksHeading">
+        <div className="col-3">
+          <img
+            src={require("../assets/images/booksIcon.png")}
+            alt="booksIcon"
+            className="booksIcons"
+          />
+        </div>
+        <div className="col-6">
+          <img
+            src={require("../assets/images/booksHeading.png")}
+            alt="booksHeading"
+            className="booksHeadingIcon"
+          />
+        </div>
+        <div className="col-3">
+          <img
+            src={require("../assets/images/booksIcon.png")}
+            alt="booksIcon"
+            className="booksIcons"
+          />
+        </div>
       </div>
-      <BookDisplay tableData={tableData} />
+      <div id="sectionId">
+        <BooksList />
+      </div>
     </>
   );
 };
