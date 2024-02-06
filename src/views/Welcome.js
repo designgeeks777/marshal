@@ -9,11 +9,12 @@ const Welcome = () => {
   useEffect(() => {
     // Access the state object to get the previous location
     const { state } = location;
-    const section = document.getElementById("sectionId");
     if (state && state.from) {
-      if (state.from === "cart") {
+      if (state.from === "cart" && state.sectionId) {
+        const section = document.getElementById(state.sectionId);
         window.scrollTo({
-          top: section.offsetTop,
+          // top: section.offsetTop - (state.isSticky ? 50 : 0),
+          top: section.offsetTop - 50,
           behavior: "smooth",
         });
       }
@@ -21,19 +22,19 @@ const Welcome = () => {
   }, [location]);
 
   useEffect(() => {
-    navigate("/welcome", { state: { from: "" } });
+    navigate("/welcome", { state: { from: "", sectionId: "" } });
   }, []);
 
   return (
-    <>
-      <div className="d-flex align-items-center flex-wrap">
-        <div className="m-4 displayImgContainer align-self-start">
+    <div>
+      <div id="aboutSection" className="d-flex align-items-center flex-wrap">
+        <div className="displayImgContainer">
           <img
             src={require("../assets/images/marshalpic.png")}
             alt="marshalpic"
           />
         </div>
-        <div className="p-4 description text-primary">
+        <div className="description text-primary">
           Hello <br /> <br />I am Prophet Marshall Peter.Lorem ipsum dolor sit
           amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud I
@@ -61,33 +62,29 @@ const Welcome = () => {
           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         </div>
       </div>
-      <div className="row d-flex align-items-center text-center booksHeading">
-        <div className="col-3">
+      <div id="booksSection">
+        <div className="booksHeadingContainer">
           <img
             src={require("../assets/images/booksIcon.png")}
             alt="booksIcon"
-            className="booksIcons"
+            className="booksStackImage bookIconLeft"
           />
-        </div>
-        <div className="col-6">
           <img
             src={require("../assets/images/booksHeading.png")}
             alt="booksHeading"
-            className="booksHeadingIcon"
+            className="booksHeadingImage"
           />
-        </div>
-        <div className="col-3">
           <img
             src={require("../assets/images/booksIcon.png")}
             alt="booksIcon"
-            className="booksIcons"
+            className="booksStackImage bookIconRight"
           />
         </div>
+        <div>
+          <BooksList />
+        </div>
       </div>
-      <div id="sectionId">
-        <BooksList />
-      </div>
-    </>
+    </div>
   );
 };
 export default Welcome;

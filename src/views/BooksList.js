@@ -37,7 +37,8 @@ const BooksList = () => {
     getBooks();
   }, []);
 
-  const { cartItems, addToCart } = useContext(CartContext);
+  const { cartItems, addToCart, selectedItem, setSelectedItem } =
+    useContext(CartContext);
 
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 6;
@@ -56,35 +57,55 @@ const BooksList = () => {
       currentPage * pageSize,
       (currentPage + 1) * pageSize
     );
-    return (
-      <div className="row m-0 p-0">
-        {paginatedTableData.map((book) => (
-          <div key={book._id} className="col-md-6 bookDisplayItemContainer">
-            <div className="row">
-              <div className="col-6 pe-0 responsiveCol align-items-center">
-                <div className="bookImgContainer">
-                  <img
-                    alt={`Book ${book._id}`}
-                    className="img-fluid"
-                    src={book.coverPic}
-                  />
-                </div>
-              </div>
 
-              <div className="bookInfo col-6 responsiveCol">
-                <legend className="mb-0 fw-bold">
-                  {capitalize(book.bookname)}
-                </legend>
-                <p className="fw-bold fs-5">Rs {book.price}</p>
-                <Button
-                  color="secondary"
-                  className="btn btn-md btn-block btn-border-radius buttons"
-                  onClick={() => {
-                    addToCart(book);
-                  }}
-                >
-                  Add to Cart
-                </Button>
+    const navigate = useNavigate();
+
+    return (
+      <div className="bookList">
+        {paginatedTableData.map((book, index) => (
+          <div className="bookItem" key={index}>
+            <div className="bookImgContainer">
+              <img
+                src={book.coverPic}
+                alt={book.bookname}
+                className="bookImg"
+              />
+            </div>
+            <div className="bookDetails">
+              <legend className="mb-0 ">{capitalize(book.bookname)}</legend>
+              <p className="fw-bold fs-5">${book.price}</p>
+              <div style={{ position: "relative" }}>
+                <div className="buttonContainer">
+                  <Button
+                    color="secondary"
+                    className="btn btn-md btn-block btn-border-radius"
+                    onClick={() => {
+                      addToCart(book);
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
+                  {cartItems.length > 0 && (
+                    <small
+                      className="ps-4 text-primary seeCart"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
+                    >
+                      See Cart<i className="bi bi-cart-fill"></i>
+                    </small>
+                  )}
+                </div>
+                {selectedItem === book && (
+                  <div
+                    className="d-flex align-items-center text-success pt-1"
+                    style={{ position: "absolute" }}
+                  >
+                    <i className="bi bi-check-circle-fill"></i>
+                    <small>Added to cart succesfully</small>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -96,15 +117,22 @@ const BooksList = () => {
   return (
     <>
       {isLoading ? (
-        <div style={{ height: 250 }}>
+        <div
+          style={{
+            height: 250,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Spinner color="primary" className="table-spinner" />
         </div>
       ) : tableData.length === 0 ? (
-        <div style={{ height: 250 }}>No books</div>
-      ) : (
-        <div className="bookDisplayContainer">
-          <BookItem />
+        <div style={{ height: 250, textAlign: "center", paddingTop: 12 }}>
+          <h3>No books</h3>
         </div>
+      ) : (
+        <BookItem />
       )}
       {tableData.length !== 0 && (
         <Pagination className="d-flex justify-content-center">

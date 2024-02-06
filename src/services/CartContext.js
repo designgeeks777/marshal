@@ -8,7 +8,7 @@ export const CartProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("cartItems"))
       : []
   );
-
+  const [selectedItem, setSelectedItem] = useState(null);
   const addToCart = (item) => {
     const isItemInCart = cartItems.find(
       (cartItem) => cartItem._id === item._id
@@ -25,6 +25,10 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
+    setSelectedItem(item);
+    setTimeout(() => {
+      setSelectedItem(null);
+    }, 2000);
   };
 
   const removeFromCart = (item) => {
@@ -71,12 +75,6 @@ export const CartProvider = ({ children }) => {
     cartItems.forEach((object) => {
       object["action"] = "remove";
     });
-    // const combinedCartItems = Object.entries(cartItems).map(([key, value]) => ({
-    //   ...value,
-    //   book: { bookname: value.bookname, coverPic: value.coverPic },
-    // }));
-
-    // console.log("combinedCartItems", combinedCartItems);g
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
@@ -91,6 +89,7 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        selectedItem,
         addToCart,
         removeFromCart,
         clearCart,
