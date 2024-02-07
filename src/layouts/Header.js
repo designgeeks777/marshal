@@ -35,12 +35,14 @@ const Header = () => {
 
   //to scroll to books display section in welcome page
   const scrollToSection = (sectionId) => {
+    const headerHeight = headerRef.current.offsetHeight;
+
     if (location.pathname.substring(1) === "welcome") {
       const section = document.getElementById(sectionId);
       if (section) {
         setTimeout(() => {
           window.scrollTo({
-            top: section.offsetTop - headerHeight.current,
+            top: section.offsetTop - headerHeight,
             behavior: "smooth",
           });
         }, 0);
@@ -50,7 +52,7 @@ const Header = () => {
         state: {
           from: "other",
           sectionId: sectionId,
-          headerHeight: headerHeight.current,
+          headerHeight: headerHeight,
         },
       });
     }

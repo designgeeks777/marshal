@@ -909,6 +909,10 @@ table td:first-child {
 //     opacity: 0;
 //   }
 // }
+// below just section for inView
+// .section {
+//   transition: opacity 0.5s ease;
+// }
 
 .slide-in-left {
   animation: slideLeft 1s ease forwards;
