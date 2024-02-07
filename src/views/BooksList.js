@@ -27,7 +27,6 @@ const BooksList = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

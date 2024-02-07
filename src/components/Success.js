@@ -22,7 +22,6 @@ const Success = () => {
         const { bookpdf, bookname, _id } = file;
         return { bookpdf, bookname, _id };
       });
-      console.log(filesToDownload);
 
       filesToDownload.forEach((file) => {
         updateDownloadCount(file._id);
@@ -33,9 +32,7 @@ const Success = () => {
   const updateDownloadCount = async (id) => {
     try {
       const response = await axios.put(`${url}${id}/download`);
-      console.log(response.data);
     } catch (error) {
-      console.error("Error updating data:", error);
     }
   };
   const downloadFile = (bookpdf, bookname) => {
@@ -53,7 +50,6 @@ const Success = () => {
         URL.revokeObjectURL(blobUrl);
       })
       .catch((error) => {
-        console.error("Error downloading PDF:", error);
       });
   };
 

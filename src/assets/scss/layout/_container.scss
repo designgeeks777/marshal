@@ -1,6 +1,6 @@
-// .pageWrapper {
-//   min-height: 100vh; 
-// }
+.pageWrapper {
+  // min-height: 100vh; 
+}
 
 .contentArea {
   flex-grow: 1;
@@ -239,7 +239,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-  margin: 6em auto; 
+  margin: 3em 0; 
 }
 
 .booksStackImage {
@@ -293,14 +293,14 @@ button:hover {
 .bookList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  // justify-content: center;
   margin: 0 auto;
   padding-left: 56px;
 }
 
 .bookItem {
   display: flex;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   height: 176px;
   width: 48%;
   padding: 0 10px;
@@ -317,7 +317,7 @@ button:hover {
   padding: 24px 8px;
   object-fit: cover;
   border-radius: $btn-border-radius;
-  border: 1px solid $primary;
+  border: 1px solid $modal-content-border-color;
 }
 
 .bookDetails {
@@ -420,7 +420,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .cartImgContainer {
   border-radius: $btn-border-radius;
-  border: 1px solid $primary;
+  border: 1px solid $modal-content-border-color;
   // flex: 1;
   padding: 16px 8px;
   min-width: 70px;
@@ -566,4 +566,377 @@ table td:first-child {
 
 .seeCart:active, .seeCart:focus, .seeCart:hover {
   transform: scale(0.95);
+}
+
+
+//for scroll motiion
+// welcome page sections
+// .section {
+//   opacity: 0;
+//   transition: opacity 0.5s ease;
+// }
+
+// .about-me.fade-out-up {
+//   animation: fadeOutUp 1s forwards;
+// }
+
+// .about-me.fade-out-down {
+//   animation: fadeOutDown 1s forwards;
+// }
+
+// .products.fade-in-up {
+//   animation: fadeInUp 1s forwards;
+// }
+
+// .products.fade-in-down {
+//   animation: fadeInDown 1s forwards;
+// }
+
+// @keyframes fadeOutUp {
+//   from {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+//   to {
+//     opacity: 0;
+//     transform: translateY(-50px);
+//   }
+// }
+
+// @keyframes fadeOutDown {
+//   from {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+//   to {
+//     opacity: 0;
+//     transform: translateY(50px);
+//   }
+// }
+
+// @keyframes fadeInUp {
+//   from {
+//     opacity: 0;
+//     transform: translateY(-50px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+
+// @keyframes fadeInDown {
+//   from {
+//     opacity: 0;
+//     transform: translateY(50px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+// .about-me-container {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   opacity: 0; /* Initially hide the container */
+//   animation: fadeIn 1s forwards;
+//   z-index: 1000; /* Ensure the section is above other content */
+// }
+
+// .image-container,
+// .text-container {
+//   opacity: 0; /* Initially hide both image and text */
+// }
+
+// .image-container.slide-in-left{
+//   animation: slideIn 1s forwards;
+// }
+// .text-container.slide-in-right {
+//   animation: slideIn 1s forwards;
+// }
+
+// .image-container.slide-in-left {
+//   animation: slideInLeft 1s forwards;
+// }
+
+// .text-container.slide-in-right {
+//   animation: slideInRight 1s forwards;
+// }
+
+// @keyframes slideInLeft {
+//   from {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideInRight {
+//   from {
+//     transform: translateX(100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// .section {
+//   // margin-bottom: 20px; /* Add some space between sections */
+// }
+
+// .subsection {
+//   transition: transform 0.5s ease; /* Animation transition */
+//   transform: translateX(0); /* Initially position elements at their default position */
+// }
+
+// .scroll-up {
+//   transform: translateX(-100%); /* Slide out to the left */
+// }
+
+// .scroll-down {
+//   transform: translateX(100%); /* Slide out to the right */
+// }
+
+// .subsection img {
+//   max-width: 100%;
+//   height: auto;
+// }
+
+// .slide-in {
+//   transition: transform 0.5s ease;
+//   transform: translateX(0);
+// }
+
+// .slide-out-left {
+//   transition: transform 0.5s ease;
+//   transform: translateX(-100%);
+// }
+
+// .slide-out-right {
+//   transition: transform 0.5s ease;
+//   transform: translateX(100%);
+// }
+
+// @keyframes slideInLeft {
+//   from {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideOutLeft {
+//   from {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+//   to {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+// }
+
+// @keyframes slideInRight {
+//   from {
+//     transform: translateX(100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideOutRight {
+//   from {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+//   to {
+//     transform: translateX(100%);
+//     opacity: 0;
+//   }
+// }
+
+// .slide-in-left {
+//   animation: slideInLeft 0.5s ease forwards;
+// }
+
+// .slide-out-left {
+//   animation: slideOutLeft 0.5s ease forwards;
+// }
+
+// .slide-in-right {
+//   animation: slideInRight 0.5s ease forwards;
+// }
+
+// .slide-out-right {
+//   animation: slideOutRight 0.5s ease forwards;
+// }
+
+// .displayImgContainer,
+// .description {
+//   transition: transform 0.5s ease, opacity 0.5s ease;
+// }
+
+// .slide-in-left {
+//   transform: translateX(0);
+//   opacity: 1;
+// }
+
+// .slide-out-left {
+//   transform: translateX(-100%);
+//   opacity: 0;
+// }
+
+// .slide-in-right {
+//   transform: translateX(0);
+//   opacity: 1;
+// }
+
+// .slide-out-right {
+//   transform: translateX(100%);
+//   opacity: 0;
+// }
+
+// .section {
+//   transition: opacity 0.5s ease-in-out;
+// }
+
+// /* Responsive CSS */
+// @media (max-width: 768px) {
+//   .mobile-about-section {
+//     flex-direction: column;
+//   }
+// }
+
+// /* Add overflow properties to prevent horizontal scrolling */
+// .slide-in-left,
+// .slide-out-left,
+// .slide-in-right,
+// .slide-out-right {
+//   overflow-x: hidden; /* Hide horizontal overflow */
+//   white-space: wrap; /* Prevent wrapping of content */
+// }
+
+// .description {
+//   overflow-x: hidden; /* Hide horizontal overflow */
+// }
+
+// .section {
+//   transition: opacity 0.5s ease; /* Add transition property for smooth opacity changes */
+// }
+
+// .section {
+//   margin-bottom: 40px;
+//   transition: opacity 0.5s ease-in-out;
+// }
+
+// .slide-in-left {
+//   animation: slideInLeft 1s ease-in-out forwards;
+// }
+
+// .slide-out-left {
+//   animation: slideOutLeft 1s ease-in-out forwards;
+// }
+
+// .slide-in-right {
+//   animation: slideInRight 1s ease-in-out forwards;
+// }
+
+// .slide-out-right {
+//   animation: slideOutRight 1s ease-in-out forwards;
+// }
+
+// @keyframes slideInLeft {
+//   from {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideOutLeft {
+//   from {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+//   to {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+// }
+
+// @keyframes slideInRight {
+//   from {
+//     transform: translateX(100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideOutRight {
+//   from {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+//   to {
+//     transform: translateX(100%);
+//     opacity: 0;
+//   }
+// }
+
+.slide-in-left {
+  animation: slideLeft 1s ease forwards;
+}
+
+/* Define the slide-in-right animation */
+.slide-in-right {
+  animation: slideRight 1s ease forwards;
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px); /* Adjust the initial position as needed */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px); /* Adjust the initial position as needed */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

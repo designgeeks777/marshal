@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import { Container } from "reactstrap";
 import Footer from "./Footer";
+import { useEffect, useState } from "react";
 
 const FullLayout = () => {
   return (
@@ -20,6 +21,7 @@ const FullLayout = () => {
         {/********footer**********/}
         <Footer />
       </div>
+      <div>{/* Your other components go here */}</div>
     </main>
   );
 };
