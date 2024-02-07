@@ -1,7 +1,6 @@
 import BooksList from "../views/BooksList";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useInView } from "react-intersection-observer";
 
 const Welcome = () => {
   const location = useLocation();
@@ -32,75 +31,22 @@ const Welcome = () => {
   const [imageSlide, setImageSlide] = useState(true);
   const [textSlide, setTextSlide] = useState(true);
   const [lastScrollTop, setLastScrollTop] = useState(0);
-  // const { ref, inView } = useInView({
-  //   threshold: 0.5,
-  // });
 
   useEffect(() => {
     setImageSlide(true);
     setTextSlide(true);
   }, []); // Run once when component mounts
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const scrollTop = window.scrollY;
-
-  //     // Determine scrolling direction
-  //     const scrollDirection = scrollTop > lastScrollTop ? "down" : "up";
-
-  //     // Handle sliding animations only on initial load
-  //     if (scrollDirection === "down") {
-  //       // Fade out the about section
-  //       setOpacitySection1(0.5);
-  //     } else {
-  //       // Fade in the about section
-  //       setOpacitySection1(1);
-  //     }
-
-  //     // Handle sliding animations for the image and text
-  //     if (scrollDirection === "down") {
-  //       setImageSlide(false);
-  //       setTextSlide(false);
-  //     }
-
-  //     // Update opacity for the books section
-  //     const booksSection = document.getElementById("booksSection");
-  //     if (booksSection) {
-  //       const booksSectionRect = booksSection.getBoundingClientRect();
-  //       const isVisible =
-  //         booksSectionRect.top >= 0 &&
-  //         booksSectionRect.bottom <= window.innerHeight;
-  //       setOpacitySection2(isVisible ? 1 : 0.5);
-  //     }
-
-  //     // Update last scroll position
-  //     setLastScrollTop(scrollTop);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [lastScrollTop]);
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-
-      // Determine scrolling direction
-      const scrollDirection = scrollTop > lastScrollTop ? "down" : "up";
-
-      // Handle sliding animations only on initial load
-      if (scrollDirection === "down") {
-        // Fade out the about section if it's not at the top
-        if (scrollTop > 0) {
-          setOpacitySection1(1);
-        }
-      } else {
-        // Fade in the about section if it's not at the top
-        if (scrollTop > 0) {
-          setOpacitySection1(0.5);
-        }
+      const aboutSection = document.getElementById("aboutSection");
+      if (aboutSection) {
+        const aboutSectionRect = aboutSection.getBoundingClientRect();
+        const isAtTop =
+          aboutSectionRect.top >= 0 &&
+          aboutSectionRect.bottom <= window.innerHeight;
+        setOpacitySection1(isAtTop ? 1 : 0.5);
       }
 
       // Update opacity for the books section
@@ -117,11 +63,15 @@ const Welcome = () => {
       setLastScrollTop(scrollTop);
     };
 
+    // Add event listener for scroll
     window.addEventListener("scroll", handleScroll);
 
+    // Cleanup function to remove event listener
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+
+    // Dependency array to ensure the effect runs only on mount
   }, []);
 
   return (
@@ -130,7 +80,6 @@ const Welcome = () => {
         <div
           id="aboutSection"
           className={`d-flex align-items-center flex-wrap`}
-          // ref={ref}
         >
           <div
             className={`displayImgContainer ${

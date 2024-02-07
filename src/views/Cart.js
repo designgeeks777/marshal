@@ -22,12 +22,10 @@ const Cart = () => {
     navigate("/payment");
   };
 
-  const location = useLocation();
-
   // to scroll to books display section in welcome page
   const scrollToBooksListSection = (sectionId) => {
     navigate("/welcome", {
-      state: { from: "other", sectionId: sectionId, headerHeight: 50 },
+      state: { from: "other", sectionId: sectionId },
     });
   };
 
