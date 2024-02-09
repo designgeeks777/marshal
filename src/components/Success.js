@@ -8,10 +8,10 @@ import { BASEURL } from "../APIKey";
 const Success = () => {
   const navigate = useNavigate();
   const url = `${BASEURL}books/`;
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext);
   useEffect(() => {
     if (cartItems.length > 0) {
-      // handleDownloadClick();
+      handleDownloadClick();
     }
   }, []);
 
@@ -32,9 +32,9 @@ const Success = () => {
   const updateDownloadCount = async (id) => {
     try {
       const response = await axios.put(`${url}${id}/download`);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
+
   const downloadFile = (bookpdf, bookname) => {
     axios
       .get(bookpdf, { responseType: "blob" })
@@ -48,9 +48,9 @@ const Success = () => {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(blobUrl);
+        clearCart();
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   return (

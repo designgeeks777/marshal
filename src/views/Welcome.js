@@ -50,13 +50,32 @@ const Welcome = () => {
       }
 
       // Update opacity for the books section
+      // const booksSection = document.getElementById("booksSection");
+      // if (booksSection) {
+      //   const booksSectionRect = booksSection.getBoundingClientRect();
+      //   const isVisible =
+      //     booksSectionRect.top >= 0 &&
+      //     booksSectionRect.bottom <= window.innerHeight;
+      //   setOpacitySection2(isVisible ? 1 : 0.5);
+      // }
+      // Calculate the distance of the book section from the top of the viewport
       const booksSection = document.getElementById("booksSection");
       if (booksSection) {
         const booksSectionRect = booksSection.getBoundingClientRect();
-        const isVisible =
-          booksSectionRect.top >= 0 &&
-          booksSectionRect.bottom <= window.innerHeight;
-        setOpacitySection2(isVisible ? 1 : 0.5);
+        const distanceFromTop = booksSectionRect.top;
+        const distanceFromBottom = booksSectionRect.bottom;
+
+        // Calculate the maximum distance at which the book section is fully visible
+        const maxDistance = window.innerHeight;
+    
+        // Calculate the opacity based on the distance from top and bottom
+        let opacity = 1 - Math.max(0, Math.min(distanceFromTop, distanceFromBottom)) / maxDistance;
+    
+        // Ensure opacity is between 0.2 and 1
+        opacity = Math.max(0.5, opacity);
+    
+        // Set the opacity
+        setOpacitySection2(opacity);
       }
 
       // Update last scroll position
