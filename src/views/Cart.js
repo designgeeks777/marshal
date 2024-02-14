@@ -1,9 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CartTable from "../components/CartTable";
 import { Button } from "reactstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import PayModal from "../components/PayModal";
 import { CartContext } from "../services/CartContext";
+import QRCodeStep from "./payment/QRCodeStep";
+import EmailForm from "./payment/EmailForm";
+import Success from "./payment/Success";
+import { LoaderContext } from "../services/LoaderContext";
+import axios from "axios";
+import { BASEURL } from "../APIKey";
 
 const tableColumns = [
   { column: "coverPic", name: "Book" },
@@ -16,17 +22,156 @@ const tableColumns = [
 
 const Cart = () => {
   const { getCartTotal, cartItems } = useContext(CartContext);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    setBooks(
+      cartItems.map((item) => {
+        const { bookname, quantity } = item;
+        return { bookname, quantity };
+      })
+    );
+  }, [cartItems]);
+
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const pay = () => {
-    navigate("/payment");
-  };
+  const [showModal, setShowModal] = useState(false);
 
   // to scroll to books display section in welcome page
   const scrollToBooksListSection = (sectionId) => {
     navigate("/welcome", {
       state: { from: "other", sectionId: sectionId },
     });
+  };
+
+  const [contentIndex, setContentIndex] = useState(0);
+  const [formData, setFormData] = useState(null);
+  const [isFormEmpty, setIsFormEmpty] = useState(true);
+  const { isLoading, setIsLoading } = useContext(LoaderContext);
+  useEffect(() => {
+    setContentIndex(0);
+  }, []);
+
+  // useEffect(() => {
+  //   if (!isFormEmpty) {
+  //     setIsFormEmpty(
+  //       contentIndex === 1 &&
+  //         (formData === null ||
+  //           formData.orderedby === "" ||
+  //           formData.emailid === "" ||
+  //           formData.screenshot === "" ||
+  //           formData.phoneNumber === "")
+  //     );
+  //   }
+  // }, [contentIndex, formData, isFormEmpty]);
+
+  const handleFormChange = (data) => {
+    setFormData(data);
+    // setIsFormEmpty(
+    //   contentIndex === 1 &&
+    //     (formData === null ||
+    //       formData.orderedby === "" ||
+    //       formData.emailid === "" ||
+    //       formData.screenshot === "" ||
+    //       formData.phoneNumber === "")
+    // );
+  };
+
+  const contents = [
+    {
+      heading: "Checkout",
+      submitButtonText: "Done",
+      body: <QRCodeStep />,
+    },
+    {
+      heading: "Please fill out your details so that we can send you the pdfs",
+      submitButtonText: "Submit",
+      body: <EmailForm onFormChange={handleFormChange} />,
+    },
+    {
+      heading: "",
+      submitButtonText: "Done",
+      body: <Success />,
+    },
+  ];
+
+  const resetModalData = () => {
+    setFormData(null);
+  };
+
+  useEffect(() => {
+    setIsFormEmpty(
+      contentIndex === 1 &&
+        (formData === null ||
+          formData.orderedby === "" ||
+          formData.emailid === "" ||
+          formData.screenshot === "" ||
+          formData.phoneNumber === "")
+    );
+  }, [contentIndex, formData]); // Include formData in the dependency array
+
+  const onSubmit = async () => {
+    try {
+      if (!formData) {
+        console.error("Form data is empty.");
+        return;
+      }
+      const imageData = new FormData();
+      setIsLoading(true);
+      let phoneNumber = "+91" + formData.phoneNumber;
+
+      // Append values to imageData
+      imageData.append("orderid", formData.orderid);
+      imageData.append("dateoforder", formData.dateoforder);
+      imageData.append("amount", getCartTotal());
+      imageData.append("orderedby", formData.orderedby);
+      imageData.append("emailid", formData.emailid);
+      imageData.append("phone", phoneNumber);
+      imageData.append("paymentscreenshot", formData.screenshot);
+      books.forEach((book, index) => {
+        for (let key in book) {
+          imageData.append(`books[${index}][${key}]`, book[key]);
+        }
+      });
+      // Make a POST request to send form data to backend
+      await axios
+        .post(`${BASEURL}orders`, imageData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.data) {
+            setIsLoading(false);
+            setContentIndex(contentIndex + 1);
+            resetModalData();
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          resetModalData();
+          console.error("POST Error:", error);
+        });
+    } catch (error) {
+      setIsLoading(false);
+      // console.error("Error sending data to backend:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitButtonClick = () => {
+    if (contentIndex === 0) {
+      setContentIndex(contentIndex + 1);
+    }
+    if (contentIndex === 1 && isFormEmpty) {
+      return; // Don't proceed if form data is incomplete
+    }
+    if (contentIndex === 2) {
+      navigate("/welcome");
+    } else {
+      onSubmit();
+      // setContentIndex(contentIndex + 1);
+    }
   };
 
   return (
@@ -73,34 +218,25 @@ const Cart = () => {
           className="px-5 py-2 btn btn-md btn-block"
           color="primary"
           onClick={() => {
-            setShow(true);
+            setShowModal(true);
           }}
-          // disabled={
-          // }
+          disabled={cartItems.length === 0}
         >
           Checkout
         </Button>
       </div>
-      {show ? (
+      {showModal ? (
         <PayModal
-          show={show}
+          show={showModal}
           toggle={() => {
-            setShow(!show);
+            setShowModal(!showModal);
           }}
-          title="Checkout"
-          submitButtonTitle="Done"
-          submitButtonClick={() => pay()}
-          // disabled={}
-        >
-          <div className="d-flex flex-column justify-content-center align-items-center">
-            <div className="d-flex fs-4">
-              Pay: <div className="ps-2 text-primary">Rs {getCartTotal()}</div>
-            </div>
-            <div className="m-4 qrCodeContainer">
-              <img src={require("../assets/images/QR_code.png")} alt="qrCode" />
-            </div>
-          </div>
-        </PayModal>
+          title={contents[contentIndex].heading}
+          body={contents[contentIndex].body}
+          submitButtonTitle={contents[contentIndex].submitButtonText}
+          submitButtonClick={handleSubmitButtonClick}
+          disabled={showModal && contentIndex === 1 && isFormEmpty}
+        ></PayModal>
       ) : null}
     </>
   );

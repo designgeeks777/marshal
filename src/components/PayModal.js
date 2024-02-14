@@ -6,6 +6,7 @@ const PayModal = ({
   toggle,
   children,
   title,
+  body,
   disabled,
   submitButtonTitle,
   submitButtonClick,
@@ -19,9 +20,10 @@ const PayModal = ({
           {/* <ModalHeader toggle={toggle}>{title}</ModalHeader> */}
           {title !== "" ? <ModalHeader>{title}</ModalHeader> : null}
           <ModalBody className="pt-4">
-            <>{children}</>
+            {/* <>{children}</> */}
+            <>{body}</>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="mb-4">
             {/* {cancelButtonTitle !== "" ? (
               <Button
                 color="secondary"
@@ -33,7 +35,7 @@ const PayModal = ({
             ) : null} */}
             <Button
               color="primary"
-              className="mb-4 modal-btn-primary"
+              className="modal-btn-primary"
               onClick={submitButtonClick}
               disabled={disabled}
             >

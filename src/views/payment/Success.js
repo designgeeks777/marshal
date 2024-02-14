@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { CartContext } from "../services/CartContext";
+import { CartContext } from "../../services/CartContext";
 import axios from "axios";
-import { BASEURL } from "../APIKey";
+import { BASEURL } from "../../APIKey";
 
 const Success = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Success = () => {
   const { cartItems, clearCart } = useContext(CartContext);
   useEffect(() => {
     if (cartItems.length > 0) {
-      handleDownloadClick();
+      // handleDownloadClick();
     }
   }, []);
 
@@ -55,36 +55,32 @@ const Success = () => {
 
   return (
     <div className="d-flex align-items-center justify-content-center flex-column">
-      <div className="d-flex align-items-center text-success fs-2">
-        <i className="bi bi-check-circle-fill pe-2 fs-1"></i>
-        <div>Payment Succesful</div>
-      </div>
-      <div className="text-success fs-2 my-4">
-        Your transaction ID is 12345678. Please save the ID{" "}
+      <div className="d-flex align-items-center text-success fs-4 pb-3">
+        <i className="bi bi-check-circle-fill pe-2"></i>
+        <div>Purchase request submitted succesfully</div>
       </div>
       <div className="mb-4 text-center">
-        Your book(s) are getting downloaded. Please dont refresh/change the page
-        till download completes. If your download didnt start automatically,
-        click below
+        We will shortly share you the pdf(s) within 2 working days.Call us on
+        +91888767876 if you didn't receive
       </div>
-      <div className="p-4 d-flex justify-content-center">
-        <Button
+      {/* <div className="p-4 d-flex justify-content-center"> */}
+      {/* <Button
           className="me-3 btn btn-lg  btn-border-radius paymentSuccessBtns"
           color="primary"
           onClick={handleDownloadClick}
         >
           Dowload
-        </Button>
-        <Button
+        </Button> */}
+      {/* <Button
           className="ms-3 btn btn-lg btn-block btn-border-radius paymentSuccessBtns"
-          color="secondary"
+          color="primary"
           onClick={() => {
-            navigate("/cart");
+            navigate("/welcome");
           }}
         >
-          Go back
-        </Button>
-      </div>
+          Done
+        </Button> */}
+      {/* </div> */}
     </div>
   );
 };
