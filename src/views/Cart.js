@@ -109,6 +109,25 @@ const Cart = () => {
     );
   }, [contentIndex, formData]); // Include formData in the dependency array
 
+  async function getLatestOrderID() {
+    const response = await axios.get(`${BASEURL}orders`);
+    const orders = response.data;
+    let highestOrderID = 0;
+    orders.forEach((order) => {
+      if (order.orderid > highestOrderID) {
+        highestOrderID = order.orderid;
+      }
+    });
+    highestOrderID++;
+    return highestOrderID;
+  }
+
+  const [orderid, setorderid] = useState(0);
+  useEffect(() => {
+    if (orderid !== "") {
+      setorderid(orderid);
+    }
+  }, [orderid]);
   const onSubmit = async () => {
     try {
       if (!formData) {
@@ -118,9 +137,9 @@ const Cart = () => {
       const imageData = new FormData();
       setIsLoading(true);
       let phoneNumber = "+91" + formData.phoneNumber;
-
+      console.log(orderid);
       // Append values to imageData
-      imageData.append("orderid", formData.orderid);
+      imageData.append("orderid", orderid);
       imageData.append("dateoforder", formData.dateoforder);
       imageData.append("amount", getCartTotal());
       imageData.append("orderedby", formData.orderedby);
@@ -132,6 +151,25 @@ const Cart = () => {
           imageData.append(`books[${index}][${key}]`, book[key]);
         }
       });
+      // for email data
+      let output = "\n";
+      books.forEach((book, index) => {
+        output += `Bookname: ${book.bookname}, Quantity: ${book.quantity}\n`;
+        // if (index !== books.length - 1) {
+        //   output += "\n";
+        // }
+      });
+      let emailData = {
+        to: formData.emailid,
+        subject: `New Order received with order number : ${orderid}`,
+        message: `Book ordered by : ${formData.orderedby}
+Orders : ${output}
+Email : ${formData.emailid}
+Phone : ${phoneNumber}
+Amount : Rs ${getCartTotal()}
+`,
+      };
+      console.log(emailData.message);
       // Make a POST request to send form data to backend
       await axios
         .post(`${BASEURL}orders`, imageData, {
@@ -144,6 +182,13 @@ const Cart = () => {
             setIsLoading(false);
             setContentIndex(contentIndex + 1);
             resetModalData();
+            try {
+              axios.post(`${BASEURL}/sendEmail`, emailData);
+              alert("Email sent successfully!");
+            } catch (error) {
+              console.error("Error sending email:", error);
+              alert("Failed to send email. Please try again later.");
+            }
           }
         })
         .catch((error) => {
@@ -169,6 +214,13 @@ const Cart = () => {
     if (contentIndex === 2) {
       navigate("/welcome");
     } else {
+      getLatestOrderID()
+        .then((highestOrderID) => {
+          setorderid("00" + highestOrderID);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
       onSubmit();
       // setContentIndex(contentIndex + 1);
     }
@@ -235,7 +287,7 @@ const Cart = () => {
           body={contents[contentIndex].body}
           submitButtonTitle={contents[contentIndex].submitButtonText}
           submitButtonClick={handleSubmitButtonClick}
-          disabled={showModal && contentIndex === 1 && isFormEmpty}
+          // disabled={showModal && contentIndex === 1 && isFormEmpty}
         ></PayModal>
       ) : null}
     </>

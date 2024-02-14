@@ -5,11 +5,8 @@ import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const EmailForm = ({ onFormChange }) => {
   const [emailData, setEmailData] = useState({
-    orderid: "1",
     dateoforder: new Date().toLocaleDateString("en-GB"),
     emailid: "",
-    subject: "",
-    message: "",
     orderedby: "",
     screenshot: "",
     phoneNumber: "",
