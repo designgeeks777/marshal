@@ -18,10 +18,12 @@ const Welcome = () => {
             behavior: "smooth",
           });
         }, 100); // Delay scrolling slightly to allow page to adjust
+      } else if (location.pathname === "/welcome") {
+        // scrollToBooksSection();
       }
     }
   }, [location]);
-  // This useEffect ensures that when the component mounts, it navigates to the "/welcome" route
+
   useEffect(() => {
     navigate("/welcome", { replace: true }); // Replace the current entry in the history
   }, [navigate]);
@@ -43,38 +45,30 @@ const Welcome = () => {
       const aboutSection = document.getElementById("aboutSection");
       if (aboutSection) {
         const aboutSectionRect = aboutSection.getBoundingClientRect();
-        const isAtTop =
-          aboutSectionRect.top >= 0 &&
-          aboutSectionRect.bottom <= window.innerHeight;
-        setOpacitySection1(isAtTop ? 1 : 0.5);
+        const windowHeight = window.innerHeight;
+        const sectionTop = aboutSectionRect.top;
+        const sectionBottom = aboutSectionRect.bottom;
+
+        // Calculate opacity based on how much of the section is visible
+        let opacity = 1;
+        if (sectionTop < windowHeight && sectionBottom > 0) {
+          const visibleHeight =
+            Math.min(windowHeight, sectionBottom) - Math.max(0, sectionTop);
+          const fullHeight = Math.min(windowHeight, aboutSectionRect.height);
+          opacity = visibleHeight / fullHeight;
+        }
+
+        setOpacitySection1(opacity);
       }
 
       // Update opacity for the books section
-      // const booksSection = document.getElementById("booksSection");
-      // if (booksSection) {
-      //   const booksSectionRect = booksSection.getBoundingClientRect();
-      //   const isVisible =
-      //     booksSectionRect.top >= 0 &&
-      //     booksSectionRect.bottom <= window.innerHeight;
-      //   setOpacitySection2(isVisible ? 1 : 0.5);
-      // }
-      // Calculate the distance of the book section from the top of the viewport
       const booksSection = document.getElementById("booksSection");
       if (booksSection) {
         const booksSectionRect = booksSection.getBoundingClientRect();
-        const distanceFromTop = booksSectionRect.top;
-        const distanceFromBottom = booksSectionRect.bottom;
-
-        // Calculate the maximum distance at which the book section is fully visible
-        const maxDistance = window.innerHeight;
-    
-        // Calculate the opacity based on the distance from top and bottom
-        let opacity = 1 - Math.max(0, Math.min(distanceFromTop, distanceFromBottom)) / maxDistance;
-    
-        // Ensure opacity is between 0.2 and 1
-        opacity = Math.max(0.5, opacity);
-    
-        // Set the opacity
+        const isVisible =
+          booksSectionRect.top >= 0 &&
+          booksSectionRect.bottom <= window.innerHeight;
+        const opacity = isVisible ? 1 : 0.5;
         setOpacitySection2(opacity);
       }
 
@@ -92,7 +86,6 @@ const Welcome = () => {
 
     // Dependency array to ensure the effect runs only on mount
   }, []);
-
   return (
     <div className="container">
       <div className="section" style={{ opacity: opacitySection1 }}>
