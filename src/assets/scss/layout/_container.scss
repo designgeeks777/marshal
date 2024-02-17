@@ -601,3 +601,10 @@ table td:first-child {
     transform: translateX(0);
   }
 }
+
+@media (max-width: 767px) {
+  .headerMobileView{
+    flex: 1;
+    
+  }
+}

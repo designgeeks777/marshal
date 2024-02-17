@@ -64,7 +64,7 @@ const Header = () => {
     <div className={`stickyHeader ${isSticky ? "sticky" : ""}`} ref={headerRef}>
       <Navbar className="p-4 bg-white text-primary" dark expand="md">
         <div
-          className=" d-flex align-items-center"
+          className=" d-flex align-items-center headerMobileView"
           onClick={() => {
             navigate("/welcome");
           }}
