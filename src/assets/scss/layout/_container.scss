@@ -89,6 +89,7 @@ cursor: pointer;
   border-color: transparent !important;
   background:  $gradient !important;
   border-radius: $btn-border-radius-lg !important;
+  transition: all 0.3s ease; 
 }
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
@@ -102,6 +103,7 @@ cursor: pointer;
   background-color: $white !important;
   border-color: $primary !important;
   border-radius: $btn-border-radius-lg !important;
+  transition: all 0.3s ease; 
 } 
 
 .btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus  {

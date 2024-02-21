@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { CartContext } from "../services/CartContext";
@@ -9,8 +9,12 @@ const Success = () => {
   const navigate = useNavigate();
   const url = `${BASEURL}books/`;
   const { cartItems, clearCart } = useContext(CartContext);
+
   useEffect(() => {
-    if (cartItems.length > 0) {
+    const isPageReloaded =
+      window.performance.getEntriesByType("navigation")[0].type === "reload";
+
+    if (!isPageReloaded && cartItems.length > 0) {
       handleDownloadClick();
     }
   }, []);
@@ -48,20 +52,12 @@ const Success = () => {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(blobUrl);
-        clearCart();
       })
       .catch((error) => {});
   };
 
   return (
     <div className="d-flex align-items-center justify-content-center flex-column">
-      <div className="d-flex align-items-center text-success fs-2">
-        <i className="bi bi-check-circle-fill pe-2 fs-1"></i>
-        <div>Payment Succesful</div>
-      </div>
-      <div className="text-success fs-2 my-4">
-        Your transaction ID is 12345678. Please save the ID{" "}
-      </div>
       <div className="mb-4 text-center">
         Your book(s) are getting downloaded. Please dont refresh/change the page
         till download completes. If your download didnt start automatically,
@@ -73,13 +69,14 @@ const Success = () => {
           color="primary"
           onClick={handleDownloadClick}
         >
-          Dowload
+          Download
         </Button>
         <Button
           className="ms-3 btn btn-lg btn-block btn-border-radius paymentSuccessBtns"
           color="secondary"
           onClick={() => {
-            navigate("/cart");
+            clearCart();
+            navigate("/welcome");
           }}
         >
           Go back
