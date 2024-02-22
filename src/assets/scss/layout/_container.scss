@@ -92,7 +92,7 @@ cursor: pointer;
   transition: all 0.3s ease; 
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
+.btn-primary:hover, .btn-primary:active  {
   background-color: $primary !important;
   border-color: $primary !important;
   transform: scale(0.95);
