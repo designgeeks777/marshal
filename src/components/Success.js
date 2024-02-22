@@ -19,6 +19,17 @@ const Success = () => {
     }
   }, []);
 
+  //Scroll to the download section when the component mounts
+  const downloadSectionRef = useRef(null);
+  useEffect(() => {
+    if (downloadSectionRef.current) {
+      downloadSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, []);
+
   const handleDownloadClick = () => {
     // Replace these URLs and file names with your actual file URLs and names
     if (cartItems.length > 0) {
@@ -33,6 +44,7 @@ const Success = () => {
       });
     }
   };
+
   const updateDownloadCount = async (id) => {
     try {
       const response = await axios.put(`${url}${id}/download`);
@@ -57,7 +69,10 @@ const Success = () => {
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center flex-column">
+    <div
+      className="d-flex align-items-center justify-content-center flex-column"
+      ref={downloadSectionRef}
+    >
       <div className="mb-4 text-center">
         Your book(s) are getting downloaded. Please dont refresh/change the page
         till download completes. If your download didnt start automatically,
