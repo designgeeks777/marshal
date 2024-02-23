@@ -9,15 +9,14 @@ const Success = () => {
   const navigate = useNavigate();
   const url = `${BASEURL}books/`;
   const { cartItems, clearCart } = useContext(CartContext);
+  const downloadInitiated = sessionStorage.getItem("downloadInitiated");
 
   useEffect(() => {
-    const isPageReloaded =
-      window.performance.getEntriesByType("navigation")[0].type === "reload";
-
-    if (!isPageReloaded && cartItems.length > 0) {
+    if (downloadInitiated !== "true" && cartItems.length > 0) {
       handleDownloadClick();
+      sessionStorage.setItem("downloadInitiated", "true");
     }
-  }, []);
+  }, [downloadInitiated]);
 
   //Scroll to the download section when the component mounts
   const downloadSectionRef = useRef(null);

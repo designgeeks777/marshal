@@ -87,6 +87,7 @@ const Cart = () => {
           title="Checkout"
           submitButtonTitle="Done"
           submitButtonClick={() => {
+            sessionStorage.setItem("downloadInitiated", "false");
             navigate("/download");
           }}
         >
