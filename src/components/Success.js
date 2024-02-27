@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { CartContext } from "../services/CartContext";
@@ -8,10 +8,24 @@ import { BASEURL } from "../APIKey";
 const Success = () => {
   const navigate = useNavigate();
   const url = `${BASEURL}books/`;
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext);
+  const downloadInitiated = sessionStorage.getItem("downloadInitiated");
+
   useEffect(() => {
-    if (cartItems.length > 0) {
-      // handleDownloadClick();
+    if (downloadInitiated !== "true" && cartItems.length > 0) {
+      handleDownloadClick();
+      sessionStorage.setItem("downloadInitiated", "true");
+    }
+  }, [downloadInitiated]);
+
+  //Scroll to the download section when the component mounts
+  const downloadSectionRef = useRef(null);
+  useEffect(() => {
+    if (downloadSectionRef.current) {
+      downloadSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }
   }, []);
 
@@ -22,7 +36,6 @@ const Success = () => {
         const { bookpdf, bookname, _id } = file;
         return { bookpdf, bookname, _id };
       });
-      console.log(filesToDownload);
 
       filesToDownload.forEach((file) => {
         updateDownloadCount(file._id);
@@ -30,14 +43,13 @@ const Success = () => {
       });
     }
   };
+
   const updateDownloadCount = async (id) => {
     try {
       const response = await axios.put(`${url}${id}/download`);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
+    } catch (error) {}
   };
+
   const downloadFile = (bookpdf, bookname) => {
     axios
       .get(bookpdf, { responseType: "blob" })
@@ -52,20 +64,14 @@ const Success = () => {
         document.body.removeChild(link);
         URL.revokeObjectURL(blobUrl);
       })
-      .catch((error) => {
-        console.error("Error downloading PDF:", error);
-      });
+      .catch((error) => {});
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center flex-column">
-      <div className="d-flex align-items-center text-success fs-2">
-        <i className="bi bi-check-circle-fill pe-2 fs-1"></i>
-        <div>Payment Succesful</div>
-      </div>
-      <div className="text-success fs-2 my-4">
-        Your transaction ID is 12345678. Please save the ID{" "}
-      </div>
+    <div
+      className="d-flex align-items-center justify-content-center flex-column"
+      ref={downloadSectionRef}
+    >
       <div className="mb-4 text-center">
         Your book(s) are getting downloaded. Please dont refresh/change the page
         till download completes. If your download didnt start automatically,
@@ -77,13 +83,14 @@ const Success = () => {
           color="primary"
           onClick={handleDownloadClick}
         >
-          Dowload
+          Download
         </Button>
         <Button
           className="ms-3 btn btn-lg btn-block btn-border-radius paymentSuccessBtns"
           color="secondary"
           onClick={() => {
-            navigate("/cart");
+            clearCart();
+            navigate("/welcome");
           }}
         >
           Go back

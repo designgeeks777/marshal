@@ -32,21 +32,6 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (item) => {
-    // const isItemInCart = cartItems.find(
-    //   (cartItem) => cartItem._id === item._id
-    // );
-
-    // if (isItemInCart.quantity === 1) {
-    //   setCartItems(cartItems.filter((cartItem) => cartItem._id !== item._id));
-    // } else {
-    //   setCartItems(
-    //     cartItems.map((cartItem) =>
-    //       cartItem._id === item._id
-    //         ? { ...cartItem, quantity: cartItem.quantity - 1 }
-    //         : cartItem
-    //     )
-    //   );
-    // }
     setCartItems((prevCart) =>
       prevCart.filter((cartItem) => cartItem._id !== item._id)
     );

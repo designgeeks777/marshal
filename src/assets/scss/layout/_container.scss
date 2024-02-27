@@ -1,6 +1,6 @@
-// .pageWrapper {
-//   min-height: 100vh; 
-// }
+.pageWrapper {
+  // min-height: 100vh; 
+}
 
 .contentArea {
   flex-grow: 1;
@@ -89,9 +89,10 @@ cursor: pointer;
   border-color: transparent !important;
   background:  $gradient !important;
   border-radius: $btn-border-radius-lg !important;
+  transition: all 0.3s ease; 
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
+.btn-primary:hover, .btn-primary:active  {
   background-color: $primary !important;
   border-color: $primary !important;
   transform: scale(0.95);
@@ -102,6 +103,7 @@ cursor: pointer;
   background-color: $white !important;
   border-color: $primary !important;
   border-radius: $btn-border-radius-lg !important;
+  transition: all 0.3s ease; 
 } 
 
 .btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus  {
@@ -239,7 +241,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-  margin: 6em auto; 
+  margin: 3em 0; 
 }
 
 .booksStackImage {
@@ -293,14 +295,14 @@ button:hover {
 .bookList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  // justify-content: center;
   margin: 0 auto;
   padding-left: 56px;
 }
 
 .bookItem {
   display: flex;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   height: 176px;
   width: 48%;
   padding: 0 10px;
@@ -317,7 +319,7 @@ button:hover {
   padding: 24px 8px;
   object-fit: cover;
   border-radius: $btn-border-radius;
-  border: 1px solid $primary;
+  border: 1px solid $modal-content-border-color;
 }
 
 .bookDetails {
@@ -420,7 +422,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .cartImgContainer {
   border-radius: $btn-border-radius;
-  border: 1px solid $primary;
+  border: 1px solid $modal-content-border-color;
   // flex: 1;
   padding: 16px 8px;
   min-width: 70px;
@@ -566,4 +568,45 @@ table td:first-child {
 
 .seeCart:active, .seeCart:focus, .seeCart:hover {
   transform: scale(0.95);
+}
+
+
+//for scroll motiion
+// welcome page sections
+.slide-in-left {
+  animation: slideLeft 1s ease forwards;
+}
+
+/* Define the slide-in-right animation */
+.slide-in-right {
+  animation: slideRight 1s ease forwards;
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px); /* Adjust the initial position as needed */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px); /* Adjust the initial position as needed */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .headerMobileView{
+    flex: 1;
+    
+  }
 }

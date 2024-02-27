@@ -18,15 +18,12 @@ const Cart = () => {
   const { getCartTotal, cartItems } = useContext(CartContext);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const pay = () => {
-    navigate("/payment");
-  };
 
-  const location = useLocation();
-
-  //to scroll to books display section in welcome page
+  // to scroll to books display section in welcome page
   const scrollToBooksListSection = (sectionId) => {
-    navigate("/welcome", { state: { from: "cart", sectionId: sectionId } });
+    navigate("/welcome", {
+      state: { from: "other", sectionId: sectionId },
+    });
   };
 
   return (
@@ -89,16 +86,23 @@ const Cart = () => {
           }}
           title="Checkout"
           submitButtonTitle="Done"
-          submitButtonClick={() => pay()}
-          // disabled={}
+          submitButtonClick={() => {
+            sessionStorage.setItem("downloadInitiated", "false");
+            navigate("/download");
+          }}
         >
           <div className="d-flex flex-column justify-content-center align-items-center">
-            <div className="d-flex fs-4">
-              Pay: <div className="ps-2 text-primary">Rs {getCartTotal()}</div>
+            <div className="d-flex fs-5">
+              Total cost is:{" "}
+              <div className="ps-2 text-primary">Rs {getCartTotal()}</div>
+            </div>
+            <div className="fs-5">
+              But you are free to donate however God leads you
             </div>
             <div className="m-4 qrCodeContainer">
               <img src={require("../assets/images/QR_code.png")} alt="qrCode" />
             </div>
+            <small>Click Done for Download to happen</small>
           </div>
         </PayModal>
       ) : null}

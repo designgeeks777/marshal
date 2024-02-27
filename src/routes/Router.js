@@ -19,7 +19,7 @@ const ThemeRoutes = () => [
       { path: "/", element: <Navigate to="/welcome" /> },
       { path: "/welcome", exact: true, element: <Welcome /> },
       { path: "/cart", exact: true, element: <Cart /> },
-      { path: "/payment", exact: true, element: <Payment /> },
+      { path: "/download", exact: true, element: <Payment /> },
     ],
   },
 ];
